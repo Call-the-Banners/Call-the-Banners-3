@@ -17,7 +17,6 @@ export default class extends Command {
     }
 
     const strikes = client.strikeHistory.current.filter(x => x.playerID === member.id);
-    console.log("test",strikes)
     const lines = strikes
       .map(x => {
         const dt = DateTime.fromJSDate(x.date);
