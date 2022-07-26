@@ -35,14 +35,12 @@ export default class extends Command {
 
     const embed = new MessageEmbed()
       .setColor("RANDOM")
-      .setTitle("Profile")
+      .setTitle(`Profile (${player.name})`)
       .setThumbnail(`${msg.author.avatarURL()}`)
-      .setDescription(
-        `${bold(`${player.name}`)}\nCoins: ${coins}\nRank: ${role}`
-      )
+      .setDescription(`Coins: ${coins}\nRank: ${role}`)
       .addFields(
         {
-          name: "BATTLE STATS",
+          name: "Battle Stats",
           value: `# of Strikes: ${
             strikes.length
           }\n Total HP Dealt: ${totalDamageDealtInStage}\n Average HP Dealt: ${decimalCheck(
@@ -51,7 +49,7 @@ export default class extends Command {
           )}`,
         },
         {
-          name: "LIFETIME STATS",
+          name: "Lifetime Stats",
           value: `Biggest Strike: ${player.maxAttack}\n Lowest Strike: ${
             player.minAttack
           }\n Lifetime Average: ${decimalCheck(averageDamage, 2)}`,
