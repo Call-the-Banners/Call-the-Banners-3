@@ -24,7 +24,7 @@ export default class extends Command {
       .sort((a, b) => b.coins - a.coins);
 
     // Chunk player into different chunk
-    const playerPerPage = 2;
+    const playerPerPage = 5;
     const chunkedPlayers = chunk(players, playerPerPage);
 
     // Transform chunkedPlayers into array of pages data
@@ -35,6 +35,7 @@ export default class extends Command {
             player.name
           }`,
           value: `Coin: ${player.coins}`,
+          inline: true
         }))
       );
       return embed;

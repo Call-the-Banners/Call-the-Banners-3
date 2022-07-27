@@ -36,7 +36,7 @@ export default class extends Command {
       .sort((a, b) => b.damageDealt - a.damageDealt);
 
     // Seperate player by pages
-    const playerPerPage = 2;
+    const playerPerPage = 5;
     const chunkedPlayers = chunk(players, playerPerPage);
 
     // Transform chunkedPlayers into array of pages data
@@ -47,6 +47,7 @@ export default class extends Command {
             player.name
           }`,
           value: `Damage Dealt: ${player.damageDealt}\n Strike Count: ${player.strikeCount}`,
+          inline: true
         }))
       )
     );
