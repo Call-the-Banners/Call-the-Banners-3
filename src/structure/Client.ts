@@ -5,6 +5,7 @@ import Enmap from "enmap";
 import { BattleStage } from "./BattleStage";
 import { Settings } from "./Settings";
 import { StrikeHistory } from "./StrikeHistory";
+import { SharpenHistory } from "./SharpenHistory";
 
 export class Client extends DiscordClient {
   commandManager = new CommandManager(process.env.PREFIX || "!");
@@ -13,11 +14,13 @@ export class Client extends DiscordClient {
   battleStage: BattleStage;
   settings: Settings;
   strikeHistory: StrikeHistory;
+  sharpenHistory: SharpenHistory;
 
   constructor(options: ClientOptions) {
     super(options);
     this.battleStage = new BattleStage();
     this.settings = new Settings();
     this.strikeHistory = new StrikeHistory();
+    this.sharpenHistory = new SharpenHistory();
   }
 }

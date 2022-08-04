@@ -64,7 +64,15 @@ export abstract class Player {
   }
 
   attack() {
-    return random.integer(this.minAttack, this.maxAttack);
+    const sharpen = client.sharpenHistory.allTime
+      .filter((sharpenObj) => sharpenObj.playerID === this.id && sharpenObj.used === false)
+    let _maxAttack = this.maxAttack;
+    if (Object.keys(sharpen).length != 0) {
+      _maxAttack = 200;
+      client.sharpenHistory.useSharpen(this.id);
+      client.sharpenHistory.save();
+    }
+    return random.integer(this.minAttack, _maxAttack);
   }
 
   save() {
