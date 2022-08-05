@@ -8,14 +8,12 @@ export default class extends Command {
   description = "buy items with your coins";
 
   async exec(msg: Message, args: string[]) {
-
     const arg1 = args[0];
     const arg2 = args[1];
     const arg3 = args[2];
     const index = parseInt(arg2);
 
     if (!arg1) {
-
       const embed = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle("Shop")
@@ -48,14 +46,14 @@ export default class extends Command {
 
     player.coins -= cost;
 
-
     for (let i = 0; i < amount; i++) {
       const ticket = new Ticket();
       player.tickets.push(ticket);
-      msg.channel.send(`Successfully purchased **raffle ticket #${ticket.id}**`);
+      msg.channel.send(
+        `Successfully purchased **raffle ticket #${ticket.id}**`
+      );
     }
 
     player.save();
-
   }
 }

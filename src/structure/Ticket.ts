@@ -13,7 +13,10 @@ export class Ticket {
 
   // gets all saved ticket id
   static get all(): string[] {
-    return client.players.reduce((acc, player) => acc.concat(...(player.tickets || [])), []);
+    return client.players.reduce(
+      (acc, player) => acc.concat(...(player.tickets || [])),
+      []
+    );
   }
 
   get owner() {

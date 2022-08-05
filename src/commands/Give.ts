@@ -9,7 +9,6 @@ export default class extends Command {
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message, args: string[]) {
-
     const amountStr = args[0];
     const amount = parseInt(amountStr);
 
@@ -30,7 +29,8 @@ export default class extends Command {
     player.coins += amount;
     player.save();
 
-    msg.channel.send(`Successfully gave ${bold(amount)} coins to ${bold(player.name)}`);
-
+    msg.channel.send(
+      `Successfully gave ${bold(amount)} coins to ${bold(player.name)}`
+    );
   }
 }

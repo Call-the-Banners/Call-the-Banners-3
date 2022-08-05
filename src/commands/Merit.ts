@@ -35,7 +35,7 @@ export default class extends Command {
             player.name
           }`,
           value: `Coin: ${player.coins}`,
-          inline: true
+          inline: true,
         }))
       );
       return embed;

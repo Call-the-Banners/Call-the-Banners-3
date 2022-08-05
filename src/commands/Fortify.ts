@@ -9,7 +9,6 @@ export default class extends Command {
   description = "fortify castle";
 
   async exec(msg: Message, args: string[]) {
-
     if (client.battleStage.stage !== "ready") {
       throw new Error("you can only fortify on ready stage");
     }
@@ -29,13 +28,15 @@ export default class extends Command {
     }
 
     const castle = Castle.fromName(castleName);
-    const fortifyAmount = (amount / Castle.FORTIFY_COST) / 100;
+    const fortifyAmount = amount / Castle.FORTIFY_COST / 100;
     const castleNewHp = Math.round(castle.hp + castle.hp * fortifyAmount);
 
     if (castleNewHp > Castle.MAX_HP) {
-      throw new Error(`castle's HP will exceed if ${amount} coins is used to fortify this castle`);
+      throw new Error(
+        `castle's HP will exceed if ${amount} coins is used to fortify this castle`
+      );
     }
-    
+
     const player = Player.fromUser(msg.author);
 
     if (player.coins < amount) {
@@ -51,6 +52,8 @@ export default class extends Command {
     castle.save();
     player.save();
 
-    msg.channel.send(`Successfully fortified ${castle.name} by +${fortifyAmount * 100}% HP`);
+    msg.channel.send(
+      `Successfully fortified ${castle.name} by +${fortifyAmount * 100}% HP`
+    );
   }
 }

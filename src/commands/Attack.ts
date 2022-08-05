@@ -5,13 +5,11 @@ import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
 
-
 export default class extends Command {
   name = "attack";
   description = "attack castle";
 
   async exec(msg: Message, args: string[]) {
-
     if (client.battleStage.stage !== "start") {
       throw new Error("you can only attack when battle starts");
     }
@@ -44,9 +42,9 @@ export default class extends Command {
     castle.hp -= attack;
     castle.save();
 
-    client.strikeHistory.addStrike({ 
-      playerID: player.id, 
-      damage: attack, 
+    client.strikeHistory.addStrike({
+      playerID: player.id,
+      damage: attack,
       castleID: castle.id,
       date: new Date(),
     });
@@ -56,30 +54,26 @@ export default class extends Command {
     player.strikeCount++;
 
     if (castle.hp > 0) {
-
       player.lastAttack = new Date();
       player.save();
 
       msg.channel.send(
-        `${bold(player.name)} attacked ${bold(castleName)} for ${bold(attack)} damage!`
+        `${bold(player.name)} attacked ${bold(castleName)} for ${bold(
+          attack
+        )} damage!`
       );
-
     } else {
-
-
       msg.channel.send(`${bold(castleName)} has fallen!`);
 
-      const winCastle = Castle.castleA.id === castle.id ? Castle.castleB : Castle.castleA;
+      const winCastle =
+        Castle.castleA.id === castle.id ? Castle.castleB : Castle.castleA;
       msg.channel.send(`${bold(winCastle.name)} won the battle!`);
-
 
       player.coins += Castle.FATAL_BLOW_REWARD;
 
       player.save();
 
       client.battleStage.setEndStage(msg.channel);
-
     }
-    
   }
 }

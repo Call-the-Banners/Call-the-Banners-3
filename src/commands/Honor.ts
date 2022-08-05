@@ -47,7 +47,7 @@ export default class extends Command {
             player.name
           }`,
           value: `Damage Dealt: ${player.damageDealt}\n Strike Count: ${player.strikeCount}`,
-          inline: true
+          inline: true,
         }))
       )
     );

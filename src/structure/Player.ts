@@ -5,11 +5,11 @@ import { client } from "..";
 import type { Sword } from "./Sword";
 import { Ticket } from "./Ticket";
 
-
 export abstract class Player {
   coins = 0;
   minAttack = 50;
   maxAttack = 100;
+  sharpenMaxAttack = 200;
   lastAttack = new Date(2000);
   strikeCount = 0;
   tickets: Ticket[] = [];
@@ -18,7 +18,7 @@ export abstract class Player {
   constructor(
     public readonly id: string,
     public name: string,
-    public role: "general" | "sword",
+    public role: "general" | "sword"
   ) {}
 
   // Instantiate Sword or General class based on player role. Creates new Sword
@@ -58,25 +58,38 @@ export abstract class Player {
   }
 
   timeLeft() {
-    const lastAttack = DateTime.fromJSDate(this.lastAttack).plus({ hours: this.COOLDOWN });
-    const { hours, minutes, seconds } = lastAttack.diffNow(["hours", "minutes", "seconds"]);
+    const lastAttack = DateTime.fromJSDate(this.lastAttack).plus({
+      hours: this.COOLDOWN,
+    });
+    const { hours, minutes, seconds } = lastAttack.diffNow([
+      "hours",
+      "minutes",
+      "seconds",
+    ]);
     return `${hours}h ${minutes}m ${seconds}s`;
   }
 
   attack() {
-    const sharpen = client.sharpenHistory.allTime
-      .filter((sharpenObj) => sharpenObj.playerID === this.id && sharpenObj.used === false)
+    const sharpen = client.sharpenHistory.getPlayerSharpen(this.id);
     let _maxAttack = this.maxAttack;
-    if (Object.keys(sharpen).length != 0) {
-      _maxAttack = 200;
+
+    /**
+     * Check is it a sharpened attack
+     */
+    if (sharpen.length > 0) {
+      _maxAttack = this.sharpenMaxAttack;
       client.sharpenHistory.useSharpen(this.id);
       client.sharpenHistory.save();
     }
+
     return random.integer(this.minAttack, _maxAttack);
   }
 
   save() {
     const { COOLDOWN, ...data } = this;
-    client.players.set(this.id, { ...data, tickets: data.tickets.map(x => x.id) });
+    client.players.set(this.id, {
+      ...data,
+      tickets: data.tickets.map((x) => x.id),
+    });
   }
 }

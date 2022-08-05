@@ -35,26 +35,39 @@ export default class extends Command {
     const embed = new MessageEmbed()
       .setColor("RANDOM")
       .setTitle(`Profile (${player.name})`)
-      .setThumbnail(`${msg.author.avatarURL() ? msg.author.avatarURL() : "https://w7.pngwing.com/pngs/304/275/png-transparent-user-profile-computer-icons-profile-miscellaneous-logo-monochrome-thumbnail.png"}`)
+      .setThumbnail(
+        `${
+          msg.author.avatarURL()
+            ? msg.author.avatarURL()
+            : "https://w7.pngwing.com/pngs/304/275/png-transparent-user-profile-computer-icons-profile-miscellaneous-logo-monochrome-thumbnail.png"
+        }`
+      )
       .setDescription(`Coins: ${coins}\nRank: ${role}`)
-      .addFields(
-        [...(strikes.length > 0 ?
-          [{
-            name: "Battle Stats",
-            value: `# of Strikes: ${strikes.length
-              }\n Total HP Dealt: ${totalDamageDealtInStage}\n Average HP Dealt: ${decimalCheck(
-                avgDamageDealtInStage,
-                2
-              )}`
-          }] : []),
-        ...(numberOfStrikesAllTime > 0 ?
-          [{
-            name: "Lifetime Stats",
-            value: `Biggest Strike: ${player.maxAttack}\n Lowest Strike: ${player.minAttack
-              }\n Lifetime Average: ${decimalCheck(averageDamage, 2)}`
-          }] : [])
-        ]
-      );
+      .addFields([
+        ...(strikes.length > 0
+          ? [
+              {
+                name: "Battle Stats",
+                value: `# of Strikes: ${
+                  strikes.length
+                }\n Total HP Dealt: ${totalDamageDealtInStage}\n Average HP Dealt: ${decimalCheck(
+                  avgDamageDealtInStage,
+                  2
+                )}`,
+              },
+            ]
+          : []),
+        ...(numberOfStrikesAllTime > 0
+          ? [
+              {
+                name: "Lifetime Stats",
+                value: `Biggest Strike: ${player.maxAttack}\n Lowest Strike: ${
+                  player.minAttack
+                }\n Lifetime Average: ${decimalCheck(averageDamage, 2)}`,
+              },
+            ]
+          : []),
+      ]);
 
     msg.channel.send({ embeds: [embed] });
   }

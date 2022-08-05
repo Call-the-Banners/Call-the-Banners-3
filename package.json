@@ -11,7 +11,9 @@
     "clean": "rm -rf dist",
     "command": "commandment -d src/commands",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "castle-reset": "node dist/migration.js"
+    "castle-reset": "node dist/migration.js",
+    "prettier": "prettier --write .",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
@@ -30,6 +32,12 @@
   },
   "devDependencies": {
     "@types/common-tags": "^1.8.1",
-    "@types/luxon": "^2.3.0"
+    "@types/luxon": "^2.3.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
+  },
+  "lint-staged": {
+    "**/*.(ts|tsx)": "prettier --write"
   }
 }
