@@ -4,6 +4,7 @@ import { Message } from "discord.js";
 import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
+import { castleStatus } from "../utils";
 
 export default class extends Command {
   name = "attack";
@@ -56,15 +57,25 @@ export default class extends Command {
     if (castle.hp > 0) {
       player.lastAttack = new Date();
       player.save();
-
+      const attachment = await castleStatus(
+        castle.hp,
+        Castle.INITIAL_HP,
+        castle.id
+      );
       msg.channel.send(
         `${bold(player.name)} attacked ${bold(castleName)} for ${bold(
           attack
         )} damage!`
       );
+      msg.channel.send({ files: [attachment] });
     } else {
+      const attachment = await castleStatus(
+        castle.hp,
+        Castle.INITIAL_HP,
+        castle.id
+      );
       msg.channel.send(`${bold(castleName)} has fallen!`);
-
+      msg.channel.send({ files: [attachment] });
       const winCastle =
         Castle.castleA.id === castle.id ? Castle.castleB : Castle.castleA;
       msg.channel.send(`${bold(winCastle.name)} won the battle!`);
