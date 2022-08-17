@@ -4,7 +4,6 @@ import { Message } from "discord.js";
 import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
-import { castleStatus } from "../utils";
 
 export default class extends Command {
   name = "attack";
@@ -30,9 +29,9 @@ export default class extends Command {
 
     const player = Player.fromUser(msg.author);
 
-    // if (player.isOnCooldown()) {
-    //   throw new Error(`Please wait for ${bold(player.timeLeft())}`);
-    // }
+    if (player.isOnCooldown()) {
+      throw new Error(`Please wait for ${bold(player.timeLeft())}`);
+    }
 
     if (player.id === general.id) {
       throw new Error("You cannot attack your own castle");
@@ -55,20 +54,17 @@ export default class extends Command {
     player.strikeCount++;
 
     if (castle.hp > 0) {
-      console.log(castle);
       player.lastAttack = new Date();
       player.save();
-      const attachment = await castleStatus(castle.hp, castle.maxhp, castle.id);
+
       msg.channel.send(
         `${bold(player.name)} attacked ${bold(castleName)} for ${bold(
           attack
         )} damage!`
       );
-      msg.channel.send({ files: [attachment] });
     } else {
-      const attachment = await castleStatus(castle.hp, castle.maxhp, castle.id);
       msg.channel.send(`${bold(castleName)} has fallen!`);
-      msg.channel.send({ files: [attachment] });
+
       const winCastle =
         Castle.castleA.id === castle.id ? Castle.castleB : Castle.castleA;
       msg.channel.send(`${bold(winCastle.name)} won the battle!`);
