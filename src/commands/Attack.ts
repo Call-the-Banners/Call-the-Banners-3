@@ -57,17 +57,11 @@ export default class extends Command {
     if (castle.hp > 0) {
       player.lastAttack = new Date();
       player.save();
-      const attachment = await castleStatus(
-        castle.hp,
-        Castle.INITIAL_HP,
-        castle.id
-      );
       msg.channel.send(
         `${bold(player.name)} attacked ${bold(castleName)} for ${bold(
           attack
         )} damage!`
       );
-      msg.channel.send({ files: [attachment] });
     } else {
       const attachment = await castleStatus(
         castle.hp,
