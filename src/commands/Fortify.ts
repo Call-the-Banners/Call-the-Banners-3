@@ -3,6 +3,7 @@ import { Message } from "discord.js";
 import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
+import { castleStatus } from "../utils";
 
 export default class extends Command {
   name = "fortify";
@@ -51,6 +52,13 @@ export default class extends Command {
 
     castle.save();
     player.save();
+
+    const attachment = await castleStatus(
+      castle.hp,
+      Castle.INITIAL_HP,
+      castle.id
+    );
+    msg.channel.send({ files: [attachment] });
 
     msg.channel.send(
       `Successfully fortified ${castle.name} by +${fortifyAmount * 100}% HP`

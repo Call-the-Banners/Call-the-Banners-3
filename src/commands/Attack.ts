@@ -30,9 +30,9 @@ export default class extends Command {
 
     const player = Player.fromUser(msg.author);
 
-    if (player.isOnCooldown()) {
-      throw new Error(`Please wait for ${bold(player.timeLeft())}`);
-    }
+    // if (player.isOnCooldown()) {
+    //   throw new Error(`Please wait for ${bold(player.timeLeft())}`);
+    // }
 
     if (player.id === general.id) {
       throw new Error("You cannot attack your own castle");

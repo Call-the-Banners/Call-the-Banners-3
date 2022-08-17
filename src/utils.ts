@@ -29,10 +29,12 @@ export async function castleStatus(
   initialhp: number,
   castleName: string
 ) {
-  const percentage = (currenthp / initialhp) * 100;
+  let percentage = (currenthp / initialhp) * 100;
   let percentageOnProgress = (currenthp / initialhp) * 350;
   let barrier;
-
+  console.log("percentageOnProgress", percentageOnProgress);
+  console.log("percentage", percentage);
+  console.log("barrier", barrier);
   if (percentageOnProgress > 350) {
     barrier = percentageOnProgress - 350;
     percentageOnProgress = 350;
@@ -55,7 +57,7 @@ export async function castleStatus(
 
   context.beginPath();
   context.fillStyle = "#FF0000";
-  context.rect(25, 25, percentageOnProgress, 5);
+  context.rect(25, 25, percentageOnProgress >= 0 ? percentageOnProgress : 0, 5);
   context.stroke();
   context.fill();
 
