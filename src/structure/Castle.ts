@@ -25,7 +25,7 @@ export interface Strike {
 }
 
 export class Castle {
-  static readonly INITIAL_HP = 10_000;
+  static readonly INITIAL_HP = 500;
   static readonly MAX_HP = 15_000;
   static readonly MAX = 2;
   static readonly FORTIFY_COST = 100;
@@ -35,6 +35,7 @@ export class Castle {
 
   general?: General;
   hp = Castle.INITIAL_HP;
+  maxhp = Castle.INITIAL_HP;
 
   coinsSpent = 0;
   generalID?: string;
