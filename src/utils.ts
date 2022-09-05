@@ -1,5 +1,6 @@
 import { MessageAttachment } from "discord.js";
 import Canvas from "@napi-rs/canvas";
+import { random } from "@jiman24/discordjs-utils";
 
 export function chunk<T>(arr: T[], size: number) {
   return Array.from({ length: Math.ceil(arr.length / size) }, (_v, i) =>
@@ -121,4 +122,9 @@ export function getCastleImage(percentage: number, castleName: string) {
       break;
   }
   return imageUrl;
+}
+
+export function getMultiplier() {
+  const randomize = random.integer(1, 10);
+  return randomize * 0.25;
 }

@@ -70,6 +70,28 @@ export class Castle {
     }
   }
 
+  static getEnemy(name: string) {
+    switch (name.toLowerCase()) {
+      case Castle.castleA.name.toLowerCase():
+        return Castle.castleB;
+      case Castle.castleB.name.toLowerCase():
+        return Castle.castleA;
+      default:
+        throw new Error("cannot find castle");
+    }
+  }
+
+  static castleNameConverter(name: string) {
+    switch (name.toLowerCase()) {
+      case "south":
+        return "North";
+      case "north":
+        return "South";
+      default:
+        throw new Error("cannot find castle");
+    }
+  }
+
   save() {
     const { general, ...data } = this;
     client.castles.set(this.id, data);

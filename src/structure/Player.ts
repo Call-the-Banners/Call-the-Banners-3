@@ -85,6 +85,10 @@ export abstract class Player {
     return random.integer(this.minAttack, _maxAttack);
   }
 
+  aim() {
+    return random.integer(this.minAttack, this.maxAttack);
+  }
+
   save() {
     const { COOLDOWN, ...data } = this;
     client.players.set(this.id, {

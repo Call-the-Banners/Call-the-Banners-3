@@ -65,6 +65,8 @@ export class BattleStage {
     const castleB = Castle.castleB;
 
     if (castleA.hp === castleB.hp) {
+      client.loadHistory.clear();
+      client.loadHistory.save();
       throw new Error("Both castle has the same hp. No winner");
     }
 
@@ -118,6 +120,9 @@ export class BattleStage {
 
     client.strikeHistory.clear();
     client.strikeHistory.save();
+    console.log("Battle end test");
+    client.loadHistory.clear();
+    client.loadHistory.save();
   }
 
   setStage(channel: TextBasedChannel, stage: Stage | string) {

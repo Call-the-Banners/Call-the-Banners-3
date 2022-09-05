@@ -6,6 +6,7 @@ import { BattleStage } from "./BattleStage";
 import { Settings } from "./Settings";
 import { StrikeHistory } from "./StrikeHistory";
 import { SharpenHistory } from "./SharpenHistory";
+import { LoadHistory } from "./LoadHistory";
 
 export class Client extends DiscordClient {
   commandManager = new CommandManager(process.env.PREFIX || "!");
@@ -15,6 +16,7 @@ export class Client extends DiscordClient {
   settings: Settings;
   strikeHistory: StrikeHistory;
   sharpenHistory: SharpenHistory;
+  loadHistory: LoadHistory;
 
   constructor(options: ClientOptions) {
     super(options);
@@ -22,5 +24,6 @@ export class Client extends DiscordClient {
     this.settings = new Settings();
     this.strikeHistory = new StrikeHistory();
     this.sharpenHistory = new SharpenHistory();
+    this.loadHistory = new LoadHistory();
   }
 }
