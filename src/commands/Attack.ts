@@ -1,6 +1,6 @@
 import { Command } from "@jiman24/commandment";
 import { bold } from "@jiman24/discordjs-utils";
-import { Message } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
@@ -30,9 +30,9 @@ export default class extends Command {
 
     const player = Player.fromUser(msg.author);
 
-    // if (player.isOnCooldown()) {
-    //   throw new Error(`Please wait for ${bold(player.timeLeft())}`);
-    // }
+    if (player.isOnCooldown()) {
+      throw new Error(`Please wait for ${bold(player.timeLeft())}`);
+    }
 
     if (player.id === general.id) {
       throw new Error("You cannot attack your own castle");
@@ -55,13 +55,22 @@ export default class extends Command {
     player.strikeCount++;
 
     if (castle.hp > 0) {
+      const weakStrike =
+        "https://cdn.discordapp.com/attachments/982462379449282613/1011100466630893628/Weakstrike.jpg";
+      const strongStrike =
+        "https://cdn.discordapp.com/attachments/982462379449282613/1011100466291150858/Strongstrike.jpg";
       player.lastAttack = new Date();
       player.save();
-      msg.channel.send(
-        `${bold(player.name)} attacked ${bold(castleName)} for ${bold(
-          attack
-        )} damage!`
-      );
+
+      const embed = new MessageEmbed()
+        .setDescription(
+          `${bold(player.name)} attacked ${bold(castleName)} for ${bold(
+            attack
+          )} damage!`
+        )
+        .setImage(attack <= 55 ? weakStrike : strongStrike);
+
+      this.sendEmbed(msg, embed);
     } else {
       const attachment = await castleStatus(
         castle.hp,

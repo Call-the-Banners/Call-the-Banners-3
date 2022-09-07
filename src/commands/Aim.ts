@@ -17,13 +17,16 @@ export default class extends Command {
     const castleName = args[0];
     const player = Player.fromUser(msg.author);
 
-    // if (player.id === Castle.castleA.generalID || player.id === Castle.castleB.generalID) {
-    //   throw new Error("General cannot load ballista");
-    // }
+    if (
+      player.id === Castle.castleA.generalID ||
+      player.id === Castle.castleB.generalID
+    ) {
+      throw new Error("General cannot load ballista");
+    }
 
-    // if (player.isOnCooldown()) {
-    //   throw new Error(`Please wait for ${bold(player.timeLeft())}`);
-    // }
+    if (player.isOnCooldown()) {
+      throw new Error(`Please wait for ${bold(player.timeLeft())}`);
+    }
 
     if (!castleName) {
       throw new Error("you need to specify which castle");

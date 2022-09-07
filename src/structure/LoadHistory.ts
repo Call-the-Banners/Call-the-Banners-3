@@ -37,11 +37,11 @@ export class LoadHistory {
       (x) => x.castle === load.castle && x.used === false
     );
 
-    // loadData?.playerID?.forEach((objid) => {
-    //   if (objid === id) {
-    //     throw new Error("You already loaded before");
-    //   }
-    // })
+    loadData?.playerID?.forEach((objid) => {
+      if (objid === id) {
+        throw new Error("You already loaded before");
+      }
+    });
 
     if (loadData) {
       if (loadData.playerID && loadData.playerID.length <= 4) {

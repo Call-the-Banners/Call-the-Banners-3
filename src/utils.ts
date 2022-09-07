@@ -72,7 +72,7 @@ export async function castleStatus(
 
   const attachment = new MessageAttachment(
     await canvas.encode("png"),
-    "test.png"
+    "castle.png"
   );
 
   return attachment;

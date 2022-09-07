@@ -1,5 +1,5 @@
 import { Command } from "@jiman24/commandment";
-import { Message } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 import { Castle } from "../structure/Castle";
 import { castleStatus } from "../utils";
 
@@ -21,7 +21,11 @@ export default class extends Command {
       Castle.INITIAL_HP,
       castle.id
     );
-    msg.channel.send(`${castle.name}'s HP: ${castle.hp}`);
-    msg.channel.send({ files: [attachment] });
+
+    const embed = new MessageEmbed()
+      .setDescription(`${castle.name}'s HP: ${castle.hp}`)
+      .setImage("attachment://castle.png");
+
+    msg.reply({ embeds: [embed], files: [attachment] });
   }
 }
