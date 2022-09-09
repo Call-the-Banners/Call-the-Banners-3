@@ -4,7 +4,7 @@ import { Message, MessageEmbed } from "discord.js";
 import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
-import { castleStatus } from "../utils";
+import { getCastleImage } from "../utils";
 
 export default class extends Command {
   name = "attack";
@@ -54,25 +54,43 @@ export default class extends Command {
 
     player.strikeCount++;
 
-    if (castle.hp > 0) {
-      const weakStrike =
-        "https://cdn.discordapp.com/attachments/982462379449282613/1011100466630893628/Weakstrike.jpg";
-      const strongStrike =
-        "https://cdn.discordapp.com/attachments/982462379449282613/1011100466291150858/Strongstrike.jpg";
-      player.lastAttack = new Date();
-      player.save();
+    const isStrongStrike = attack >= 95;
+    const isWeakStrike = attack <= 55;
+
+    player.lastAttack = new Date();
+    player.save();
+
+    if (isStrongStrike || isWeakStrike) {
+      const strikeImage = isWeakStrike
+        ? "https://cdn.discordapp.com/attachments/982462379449282613/1011100466630893628/Weakstrike.jpg"
+        : "https://cdn.discordapp.com/attachments/982462379449282613/1011100466291150858/Strongstrike.jpg";
 
       const embed = new MessageEmbed()
-        .setDescription(
+        .setTitle(
           `${bold(player.name)} attacked ${bold(castleName)} for ${bold(
             attack
           )} damage!`
         )
-        .setImage(attack <= 55 ? weakStrike : strongStrike);
-
+        .setDescription(
+          isStrongStrike
+            ? "Huzzah! A devastating blow to the enemy"
+            : "Do I need to remind you there is a war going on? Put some umph into it!"
+        )
+        .setImage(strikeImage);
       this.sendEmbed(msg, embed);
     } else {
-      const attachment = await castleStatus(
+      msg.channel.send(
+        `${bold(player.name)} attacked ${bold(castleName)} for ${bold(
+          attack
+        )} damage!`
+      );
+    }
+
+    /**
+     * Round ended when hp fall below 0
+     */
+    if (castle.hp <= 0) {
+      const attachment = await getCastleImage(
         castle.hp,
         Castle.INITIAL_HP,
         castle.id

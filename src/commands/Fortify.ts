@@ -3,7 +3,7 @@ import { Message } from "discord.js";
 import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
-import { castleStatus } from "../utils";
+import { getCastleImage } from "../utils";
 
 export default class extends Command {
   name = "fortify";
@@ -53,7 +53,7 @@ export default class extends Command {
     castle.save();
     player.save();
 
-    const attachment = await castleStatus(
+    const attachment = await getCastleImage(
       castle.hp,
       Castle.INITIAL_HP,
       castle.id

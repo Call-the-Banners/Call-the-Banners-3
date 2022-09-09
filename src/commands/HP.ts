@@ -1,7 +1,7 @@
 import { Command } from "@jiman24/commandment";
 import { Message, MessageEmbed } from "discord.js";
 import { Castle } from "../structure/Castle";
-import { castleStatus } from "../utils";
+import { getCastleImage } from "../utils";
 
 export default class extends Command {
   name = "hp";
@@ -16,7 +16,7 @@ export default class extends Command {
 
     const castle = Castle.fromName(castleName);
 
-    const attachment = await castleStatus(
+    const attachment = await getCastleImage(
       castle.hp,
       Castle.INITIAL_HP,
       castle.id
