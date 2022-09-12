@@ -1,14 +1,13 @@
 import { Command } from "@jiman24/commandment";
-import { Message } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 import { Castle } from "../structure/Castle";
-
+import { getCastleImage } from "../utils";
 
 export default class extends Command {
   name = "hp";
   description = "show castle's HP";
 
   async exec(msg: Message, args: string[]) {
-
     const castleName = args[0];
 
     if (!castleName) {
@@ -16,7 +15,17 @@ export default class extends Command {
     }
 
     const castle = Castle.fromName(castleName);
-    msg.channel.send(`${castle.name}'s HP: ${castle.hp}`);
 
+    const attachment = await getCastleImage(
+      castle.hp,
+      Castle.INITIAL_HP,
+      castle.id
+    );
+
+    const embed = new MessageEmbed()
+      .setDescription(`${castle.name}'s HP: ${castle.hp}`)
+      .setImage("attachment://castle.png");
+
+    msg.reply({ embeds: [embed], files: [attachment] });
   }
 }

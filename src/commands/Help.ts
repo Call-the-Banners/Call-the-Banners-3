@@ -14,24 +14,18 @@ export default class Help extends Command {
     const done = new Set<string>();
 
     for (const command of commands) {
-
-      if (command.disable)
-        continue;
+      if (command.disable) continue;
 
       if (done.has(command.name)) {
-        continue
+        continue;
       } else {
         done.add(command.name);
       }
 
-      helpText += 
-        `\n**${command.name}**: \`${command.description || "none"}\``;
-
+      helpText += `\n**${command.name}**: \`${command.description || "none"}\``;
     }
 
-    const embed = new MessageEmbed()
-      .setTitle("Help")
-      .setDescription(helpText)
+    const embed = new MessageEmbed().setTitle("Help").setDescription(helpText);
 
     msg.channel.send({ embeds: [embed] });
   }

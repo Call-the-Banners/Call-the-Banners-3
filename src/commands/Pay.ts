@@ -8,7 +8,6 @@ export default class extends Command {
   description = "give coins to other players";
 
   async exec(msg: Message, args: string[]) {
-
     const player = Player.fromUser(msg.author);
     const amountStr = args[1];
     const amount = parseInt(amountStr);
@@ -17,7 +16,7 @@ export default class extends Command {
     if (!args[0] || !mentionedMember) {
       throw new Error("please mention a member");
     } else if (!amountStr) {
-      throw new Error("please give amount")
+      throw new Error("please give amount");
     } else if (Number.isNaN(amount)) {
       throw new Error("please gve valid amount");
     } else if (amount > player.coins) {
@@ -34,7 +33,8 @@ export default class extends Command {
     player.save();
     receiver.save();
 
-    msg.channel.send(`Successfully gave ${receiver.name} ${bold(amount)} coins`);
-
+    msg.channel.send(
+      `Successfully gave ${receiver.name} ${bold(amount)} coins`
+    );
   }
 }
