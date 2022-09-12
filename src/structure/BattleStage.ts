@@ -5,7 +5,7 @@ import { Castle } from "./Castle";
 import { Player } from "./Player";
 import { Sword } from "./Sword";
 
-/** 
+/**
  * There are 3 stages in this game:
  * ready - generals can fortify and players cannot attack and castle's hp reset
  * start - generals cannot fortify and players can attack
@@ -24,7 +24,6 @@ export class BattleStage {
   }
 
   setReadyStage(channel: TextBasedChannel) {
-
     this.stage = "ready";
     this.save();
 
@@ -59,19 +58,23 @@ export class BattleStage {
   setEndStage(channel: TextBasedChannel) {
     this.stage = "end";
     this.save();
-    
+
     channel.send(`All castles cannot be attacked at this stage`);
 
     const castleA = Castle.castleA;
     const castleB = Castle.castleB;
 
     if (castleA.hp === castleB.hp) {
+      client.loadHistory.clear();
+      client.loadHistory.save();
+
+      client.strikeHistory.clear();
+      client.strikeHistory.save();
       throw new Error("Both castle has the same hp. No winner");
     }
 
     const winnerCastle = castleA.hp > castleB.hp ? castleA : castleB;
     const loserCastle = castleA.hp < castleB.hp ? castleA : castleB;
-
 
     const winGeneral = winnerCastle.general;
     const loseGeneral = loserCastle.general;
@@ -104,13 +107,12 @@ export class BattleStage {
     loserCastle.save();
 
     client.players.forEach((_, id) => {
-
       const player = Player.fromID(id as string)!;
 
       if (player instanceof Sword) {
-
-        const strikeHistory = client.strikeHistory.current
-          .filter(x => x.playerID === player.id);
+        const strikeHistory = client.strikeHistory.current.filter(
+          (x) => x.playerID === player.id
+        );
 
         player.rankUp(strikeHistory.length);
       }
@@ -121,19 +123,28 @@ export class BattleStage {
 
     client.strikeHistory.clear();
     client.strikeHistory.save();
+    console.log("Battle end test");
+    client.loadHistory.clear();
+    client.loadHistory.save();
   }
 
   setStage(channel: TextBasedChannel, stage: Stage | string) {
-
     if (stage === this.stage) {
       throw new Error(`already in the ${this.stage} stage`);
     }
 
     switch (stage) {
-      case "start": this.setStartStage(channel); break;
-      case "ready": this.setReadyStage(channel); break;
-      case "end": this.setEndStage(channel); break;
-      default: throw new Error(`invalid stage "${stage}"`);
+      case "start":
+        this.setStartStage(channel);
+        break;
+      case "ready":
+        this.setReadyStage(channel);
+        break;
+      case "end":
+        this.setEndStage(channel);
+        break;
+      default:
+        throw new Error(`invalid stage "${stage}"`);
     }
   }
 

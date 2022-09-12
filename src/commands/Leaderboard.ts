@@ -7,8 +7,8 @@ export default class extends Command {
   description = "show player leaderboard";
 
   async exec(msg: Message) {
-
-    const players = client.players.array()
+    const players = client.players
+      .array()
       .sort((a, b) => b.coins - a.coins)
       .slice(0, 10)
       .map((x, i) => `${i + 1}. ${x.name} ${x.coins}`);

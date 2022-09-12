@@ -1,6 +1,5 @@
 import Enmap from "enmap";
 
-
 export class Settings {
   id = "main";
   generalCooldown = 3; // hours
@@ -16,4 +15,3 @@ export class Settings {
     Settings.db.set(this.id, { ...this });
   }
 }
-

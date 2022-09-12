@@ -17,8 +17,7 @@ client.players.forEach((_, id) => {
 
   player.role = "sword";
   player.save();
-
-})
+});
 
 console.log("reset succesfully");
 

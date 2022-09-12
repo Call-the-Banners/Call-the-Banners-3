@@ -3,13 +3,13 @@ import { Message } from "discord.js";
 import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
+import { getCastleImage } from "../utils";
 
 export default class extends Command {
   name = "fortify";
   description = "fortify castle";
 
   async exec(msg: Message, args: string[]) {
-
     if (client.battleStage.stage !== "ready") {
       throw new Error("you can only fortify on ready stage");
     }
@@ -29,13 +29,15 @@ export default class extends Command {
     }
 
     const castle = Castle.fromName(castleName);
-    const fortifyAmount = (amount / Castle.FORTIFY_COST) / 100;
+    const fortifyAmount = amount / Castle.FORTIFY_COST / 100;
     const castleNewHp = Math.round(castle.hp + castle.hp * fortifyAmount);
 
     if (castleNewHp > Castle.MAX_HP) {
-      throw new Error(`castle's HP will exceed if ${amount} coins is used to fortify this castle`);
+      throw new Error(
+        `castle's HP will exceed if ${amount} coins is used to fortify this castle`
+      );
     }
-    
+
     const player = Player.fromUser(msg.author);
 
     if (player.coins < amount) {
@@ -51,6 +53,15 @@ export default class extends Command {
     castle.save();
     player.save();
 
-    msg.channel.send(`Successfully fortified ${castle.name} by +${fortifyAmount * 100}% HP`);
+    const attachment = await getCastleImage(
+      castle.hp,
+      Castle.INITIAL_HP,
+      castle.id
+    );
+    msg.channel.send({ files: [attachment] });
+
+    msg.channel.send(
+      `Successfully fortified ${castle.name} by +${fortifyAmount * 100}% HP`
+    );
   }
 }

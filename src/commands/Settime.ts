@@ -7,7 +7,6 @@ export default class extends Command {
   description = "sets cooldown period (in hours)";
 
   async exec(msg: Message, args: string[]) {
-
     const role = args[0];
     const amountStr = args[1];
     const amount = parseInt(amountStr);
@@ -32,6 +31,5 @@ export default class extends Command {
 
     msg.channel.send(`Successfully set ${role} cooldown to ${amount} hours`);
     client.settings.save();
-
   }
 }
