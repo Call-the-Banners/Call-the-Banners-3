@@ -2,13 +2,14 @@ import { Command } from "@jiman24/commandment";
 import { Message, MessageEmbed } from "discord.js";
 import { Player } from "../structure/Player";
 import { client } from "..";
-import { decimalCheck } from "../utils";
+import { decimalCheck, warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "profile";
   description = "show player's profile";
 
   async exec(msg: Message) {
+    warChannelFilter(msg.channel.id);
     const player = Player.fromUser(msg.author);
 
     // User data

@@ -49,21 +49,21 @@ export async function getCastleImage(
   context.stroke();
   context.fill();
 
+  let setHpBarWidth = (hpPercentage % 1) * hpBarWidth;
+  if (hpPercentage >= 1) {
+    setHpBarWidth = hpBarWidth;
+  }
+
   context.beginPath();
   context.fillStyle = "#FF0000";
-  context.rect(
-    25,
-    25,
-    hpPercentage > 0 ? (hpPercentage % 1) * hpBarWidth : 0,
-    5
-  );
+  context.rect(25, 25, setHpBarWidth, 5);
   context.stroke();
   context.fill();
 
   if (hpPercentage > 1) {
     context.beginPath();
     context.fillStyle = "#B800B2";
-    context.rect(25, 25, (1 - hpPercentage) * hpBarWidth, 5);
+    context.rect(25, 25, (hpPercentage - 1) * hpBarWidth, 5);
     context.stroke();
     context.fill();
   }
@@ -111,4 +111,16 @@ export function getBaseCastleImage(percentage: number, castleName: string) {
 export function getMultiplier() {
   const randomize = random.integer(1, 10);
   return randomize * 0.25;
+}
+
+export function warChannelFilter(channelId: string) {
+  if (channelId != "996302755792703522") {
+    throw new Error("This command only allow in war channel");
+  }
+}
+
+export function enlistChannelFilter(channelId: string) {
+  if (channelId != "1018755416609525823") {
+    throw new Error("This command only allow in enlist channel");
+  }
 }

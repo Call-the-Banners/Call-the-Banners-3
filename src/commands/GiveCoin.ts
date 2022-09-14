@@ -1,12 +1,11 @@
 import { Command } from "@jiman24/commandment";
 import { Message, PermissionResolvable } from "discord.js";
-import { Castle } from "../structure/Castle";
-import { Player } from "../structure/Player";
 import { warChannelFilter } from "../utils";
+import { Player } from "../structure/Player";
 
 export default class extends Command {
-  name = "assign";
-  description = "assign player as General (admin only)";
+  name = "givecoin";
+  description = "Give coin to general. !givecoin <user> <coin amount>";
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message, args: string[]) {
@@ -17,22 +16,12 @@ export default class extends Command {
       throw new Error("you need to mention a user");
     }
 
-    const castleName = args[1];
-    const castle = Castle.fromName(castleName);
+    const coinAmount = parseInt(args[1]);
     const player = Player.fromUser(mentionedMember.user);
 
-    player.role = "general";
-
-    // remove previous general of the castle
-    castle.removeGeneral();
-
-    castle.generalID = player.id;
-
+    player.coins += coinAmount;
     player.save();
-    castle.save();
 
-    msg.channel.send(
-      `Successfully set ${player.name} as General to ${castleName}`
-    );
+    msg.channel.send(`Successfully give ${coinAmount} coin to ${player.name}`);
   }
 }

@@ -4,13 +4,14 @@ import { Message } from "discord.js";
 import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
-import { getMultiplier } from "../utils";
+import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "fire";
   description = "fire ballista";
 
   async exec(msg: Message, args: string[]) {
+    warChannelFilter(msg.channel.id);
     if (client.battleStage.stage !== "start") {
       throw new Error("you can only fire when battle starts");
     }
@@ -38,7 +39,6 @@ export default class extends Command {
     }
 
     const loadData = client.loadHistory.fireLoad(ownCastle.name);
-    console.log(loadData);
 
     const attack = loadData.final;
     if (attack && loadData.playerID) {

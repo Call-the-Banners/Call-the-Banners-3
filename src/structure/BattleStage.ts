@@ -123,7 +123,6 @@ export class BattleStage {
 
     client.strikeHistory.clear();
     client.strikeHistory.save();
-    console.log("Battle end test");
     client.loadHistory.clear();
     client.loadHistory.save();
   }

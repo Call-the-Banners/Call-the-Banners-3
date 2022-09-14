@@ -7,6 +7,7 @@ import { Settings } from "./Settings";
 import { StrikeHistory } from "./StrikeHistory";
 import { SharpenHistory } from "./SharpenHistory";
 import { LoadHistory } from "./LoadHistory";
+import { EthAddress } from "./EthAddress";
 
 export class Client extends DiscordClient {
   commandManager = new CommandManager(process.env.PREFIX || "!");
@@ -17,6 +18,7 @@ export class Client extends DiscordClient {
   strikeHistory: StrikeHistory;
   sharpenHistory: SharpenHistory;
   loadHistory: LoadHistory;
+  ethAddress: EthAddress;
 
   constructor(options: ClientOptions) {
     super(options);
@@ -25,5 +27,6 @@ export class Client extends DiscordClient {
     this.strikeHistory = new StrikeHistory();
     this.sharpenHistory = new SharpenHistory();
     this.loadHistory = new LoadHistory();
+    this.ethAddress = new EthAddress();
   }
 }

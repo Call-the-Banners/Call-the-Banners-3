@@ -1,12 +1,14 @@
 import { Command } from "@jiman24/commandment";
 import { Message, MessageEmbed } from "discord.js";
 import { Player } from "../structure/Player";
+import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "ticket";
   description = "show all available tickets you own";
 
   async exec(msg: Message) {
+    warChannelFilter(msg.channel.id);
     const player = Player.fromUser(msg.author);
     const tickets = player.tickets.map((x, i) => `${i + 1}. #${x.id}`);
 

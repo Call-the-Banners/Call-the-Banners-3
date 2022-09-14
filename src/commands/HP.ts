@@ -1,13 +1,14 @@
 import { Command } from "@jiman24/commandment";
 import { Message, MessageEmbed } from "discord.js";
 import { Castle } from "../structure/Castle";
-import { getCastleImage } from "../utils";
+import { getCastleImage, warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "hp";
   description = "show castle's HP";
 
   async exec(msg: Message, args: string[]) {
+    warChannelFilter(msg.channel.id);
     const castleName = args[0];
 
     if (!castleName) {
@@ -18,7 +19,7 @@ export default class extends Command {
 
     const attachment = await getCastleImage(
       castle.hp,
-      Castle.INITIAL_HP,
+      castle.initialhp,
       castle.id
     );
 

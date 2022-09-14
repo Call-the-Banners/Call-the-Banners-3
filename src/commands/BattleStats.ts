@@ -3,12 +3,14 @@ import { Command } from "@jiman24/commandment";
 import { bold, cap, toNList } from "@jiman24/discordjs-utils";
 import { client } from "..";
 import { DateTime } from "luxon";
+import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "battlestats";
   description = "show stats of a user for this current battle";
 
   async exec(msg: Message) {
+    warChannelFilter(msg.channel.id);
     const member = msg.mentions.members?.first();
 
     if (!member) {

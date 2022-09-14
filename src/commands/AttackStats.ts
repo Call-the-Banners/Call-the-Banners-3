@@ -2,12 +2,14 @@ import { Message } from "discord.js";
 import { Command } from "@jiman24/commandment";
 import { client } from "..";
 import { stripIndents } from "common-tags";
+import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "attackstats";
   description = "show attack stats of a user";
 
   async exec(msg: Message) {
+    warChannelFilter(msg.channel.id);
     const member = msg.mentions.members?.first();
 
     if (!member) {

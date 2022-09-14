@@ -19,6 +19,4 @@ client.players.forEach((_, id) => {
   player.save();
 });
 
-console.log("reset succesfully");
-
 process.exit(0);

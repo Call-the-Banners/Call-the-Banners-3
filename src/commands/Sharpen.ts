@@ -2,12 +2,14 @@ import { Command } from "@jiman24/commandment";
 import { Message } from "discord.js";
 import { client } from "..";
 import { Player } from "../structure/Player";
+import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "sharpen";
   description = "sharpen your attack";
 
   async exec(msg: Message) {
+    warChannelFilter(msg.channel.id);
     const player = Player.fromUser(msg.author);
     const amount = 50;
 

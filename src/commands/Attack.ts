@@ -5,12 +5,14 @@ import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
 import { getCastleImage } from "../utils";
+import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "attack";
   description = "attack castle";
 
   async exec(msg: Message, args: string[]) {
+    warChannelFilter(msg.channel.id);
     if (client.battleStage.stage !== "start") {
       throw new Error("you can only attack when battle starts");
     }
@@ -92,7 +94,7 @@ export default class extends Command {
     if (castle.hp <= 0) {
       const attachment = await getCastleImage(
         castle.hp,
-        Castle.INITIAL_HP,
+        castle.initialhp,
         castle.id
       );
       msg.channel.send(`${bold(castleName)} has fallen!`);

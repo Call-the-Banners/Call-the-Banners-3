@@ -1,6 +1,7 @@
 import { Message, MessageEmbed } from "discord.js";
 import { Command } from "@jiman24/commandment";
 import { client } from "..";
+import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "stats";
@@ -13,6 +14,7 @@ export default class extends Command {
   }
 
   async exec(msg: Message, args: string[]) {
+    warChannelFilter(msg.channel.id);
     const index = parseInt(args[0]) - 1 || 0;
 
     const players = [...client.players.values()]

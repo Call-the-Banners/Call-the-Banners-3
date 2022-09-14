@@ -2,6 +2,7 @@ import { Command } from "@jiman24/commandment";
 import { bold } from "@jiman24/discordjs-utils";
 import { Message, PermissionResolvable } from "discord.js";
 import { Player } from "../structure/Player";
+import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "give";
@@ -9,6 +10,7 @@ export default class extends Command {
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message, args: string[]) {
+    warChannelFilter(msg.channel.id);
     const amountStr = args[0];
     const amount = parseInt(amountStr);
 

@@ -4,6 +4,7 @@ import { Message, PermissionResolvable } from "discord.js";
 import { client } from "..";
 import { Player } from "../structure/Player";
 import { Ticket } from "../structure/Ticket";
+import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "raffle";
@@ -11,6 +12,7 @@ export default class extends Command {
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message) {
+    warChannelFilter(msg.channel.id);
     if (Ticket.all.length === 0) {
       throw new Error("no one owns a raffle ticket");
     }

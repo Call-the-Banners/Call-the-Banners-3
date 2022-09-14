@@ -1,12 +1,14 @@
 import { Command } from "@jiman24/commandment";
 import { Message, MessageEmbed } from "discord.js";
 import { client } from "..";
+import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "leaderboard";
   description = "show player leaderboard";
 
   async exec(msg: Message) {
+    warChannelFilter(msg.channel.id);
     const players = client.players
       .array()
       .sort((a, b) => b.coins - a.coins)

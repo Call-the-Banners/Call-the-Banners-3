@@ -3,13 +3,14 @@ import { Message } from "discord.js";
 import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
-import { getCastleImage } from "../utils";
+import { getCastleImage, warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "fortify";
   description = "fortify castle";
 
   async exec(msg: Message, args: string[]) {
+    warChannelFilter(msg.channel.id);
     if (client.battleStage.stage !== "ready") {
       throw new Error("you can only fortify on ready stage");
     }
@@ -32,7 +33,7 @@ export default class extends Command {
     const fortifyAmount = amount / Castle.FORTIFY_COST / 100;
     const castleNewHp = Math.round(castle.hp + castle.hp * fortifyAmount);
 
-    if (castleNewHp > Castle.MAX_HP) {
+    if (castleNewHp > castle.maxhp) {
       throw new Error(
         `castle's HP will exceed if ${amount} coins is used to fortify this castle`
       );
@@ -55,7 +56,7 @@ export default class extends Command {
 
     const attachment = await getCastleImage(
       castle.hp,
-      Castle.INITIAL_HP,
+      castle.initialhp,
       castle.id
     );
     msg.channel.send({ files: [attachment] });
