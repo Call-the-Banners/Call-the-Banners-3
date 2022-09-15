@@ -8,7 +8,7 @@ import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "aim";
-  description = "load ballista";
+  description = "!aim load ballista. EX)!aim south";
 
   async exec(msg: Message, args: string[]) {
     warChannelFilter(msg.channel.id);

@@ -5,7 +5,8 @@ import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "stage";
-  description = "sets battle stage, there are 'ready', 'start', 'end'";
+  description =
+    "!stage sets battle stage, there are 'ready', 'start', 'end'. EX)!stage start";
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message, args: string[]) {
@@ -13,7 +14,9 @@ export default class extends Command {
     const state = args[0];
 
     if (!state) {
-      throw new Error("you need to pass stage, 'ready', 'start', 'end'");
+      throw new Error(
+        "you need to pass stage, 'ready', 'start', 'end', 'pause', 'unpause'"
+      );
     }
 
     client.battleStage.setStage(msg.channel as TextBasedChannel, state);

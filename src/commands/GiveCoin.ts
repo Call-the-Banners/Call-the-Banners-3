@@ -5,7 +5,8 @@ import { Player } from "../structure/Player";
 
 export default class extends Command {
   name = "givecoin";
-  description = "Give coin to general. !givecoin <user> <coin amount>";
+  description =
+    "!givecoin Give coin to general (Admin only). !givecoin @user <coin amount>";
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message, args: string[]) {
@@ -15,8 +16,11 @@ export default class extends Command {
     if (!mentionedMember) {
       throw new Error("you need to mention a user");
     }
-
     const coinAmount = parseInt(args[1]);
+    if (isNaN(coinAmount)) {
+      throw new Error("invalid amount");
+    }
+
     const player = Player.fromUser(mentionedMember.user);
 
     player.coins += coinAmount;

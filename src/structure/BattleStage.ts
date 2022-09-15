@@ -11,7 +11,7 @@ import { Sword } from "./Sword";
  * start - generals cannot fortify and players can attack
  * end - general cannot fortify and players cannot attack
  * */
-export type Stage = "ready" | "start" | "end";
+export type Stage = "ready" | "start" | "end" | "pause";
 
 export class BattleStage {
   id = "main";
@@ -53,6 +53,24 @@ export class BattleStage {
 
     channel.send(`Generals can no longer fortify castle`);
     channel.send(`Swords and Generals now may attack castle`);
+  }
+
+  setPauseStage(channel: TextBasedChannel) {
+    this.stage = "pause";
+    this.save();
+
+    channel.send(
+      `The stage has been paused! Player will not be allow to attack, aim, or fire!`
+    );
+  }
+
+  setUnpauseStage(channel: TextBasedChannel) {
+    this.stage = "start";
+    this.save();
+
+    channel.send(
+      `The stage has been unpaused! Player can continue the battle!`
+    );
   }
 
   setEndStage(channel: TextBasedChannel) {
@@ -141,6 +159,12 @@ export class BattleStage {
         break;
       case "end":
         this.setEndStage(channel);
+        break;
+      case "pause":
+        this.setPauseStage(channel);
+        break;
+      case "unpause":
+        this.setUnpauseStage(channel);
         break;
       default:
         throw new Error(`invalid stage "${stage}"`);

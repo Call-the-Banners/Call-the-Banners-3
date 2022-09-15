@@ -78,7 +78,7 @@ export async function getCastleImage(
 
 export function getBaseCastleImage(percentage: number, castleName: string) {
   switch (castleName) {
-    case "south":
+    case "north":
       if (percentage > 0.65) {
         return "https://cdn.discordapp.com/attachments/1008996898155286590/1008997364968722463/CastleState1Blue.png";
       }
@@ -91,7 +91,7 @@ export function getBaseCastleImage(percentage: number, castleName: string) {
 
       return "https://cdn.discordapp.com/attachments/1008996898155286590/1008997370832375808/CastleState4Blue.png";
 
-    case "north":
+    case "south":
       if (percentage > 0.65) {
         return "https://cdn.discordapp.com/attachments/1008996898155286590/1008997365295894598/CastleState1Red.png";
       }

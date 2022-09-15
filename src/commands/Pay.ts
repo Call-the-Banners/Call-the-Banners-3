@@ -6,7 +6,7 @@ import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "pay";
-  description = "give coins to other players";
+  description = "!pay give coins to other players. EX)!pay @User <coin amount>";
 
   async exec(msg: Message, args: string[]) {
     warChannelFilter(msg.channel.id);

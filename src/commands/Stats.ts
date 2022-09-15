@@ -5,7 +5,8 @@ import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "stats";
-  description = "full list of players ranked based on the total strikes dealt";
+  description =
+    "!stats full list of players ranked based on the total strikes dealt. EX)!stats";
 
   private chunk<T>(arr: T[], size: number) {
     return Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>

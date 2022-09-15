@@ -3,7 +3,8 @@ import { Message, PermissionResolvable } from "discord.js";
 
 export default class extends Command {
   name = "usercount";
-  description = "check how many user joined war";
+  description =
+    "!usercount check how many user joined war (Admin only). EX)!usercoint";
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message) {

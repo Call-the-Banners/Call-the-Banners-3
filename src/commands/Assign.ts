@@ -6,7 +6,8 @@ import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "assign";
-  description = "assign player as General (admin only)";
+  description =
+    "!assign assign player as General (admin only). EX)assign @User north";
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message, args: string[]) {

@@ -7,7 +7,7 @@ import { getCastleImage, warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "fortify";
-  description = "fortify castle";
+  description = "!fortify fortify castle. EX)!fortify south 500";
 
   async exec(msg: Message, args: string[]) {
     warChannelFilter(msg.channel.id);

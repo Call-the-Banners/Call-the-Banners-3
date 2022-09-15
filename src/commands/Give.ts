@@ -6,7 +6,7 @@ import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "give";
-  description = "give player coin";
+  description = "!give give player coin. EX)!give <coin amount> @User";
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message, args: string[]) {

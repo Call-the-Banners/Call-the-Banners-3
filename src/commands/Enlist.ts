@@ -6,7 +6,8 @@ import { client } from "..";
 
 export default class extends Command {
   name = "enlist";
-  description = "add your eth address to join war";
+  description =
+    "!enlist add your eth address to join war. EX)!enlist <eth address>";
 
   async exec(msg: Message, args: string[]) {
     enlistChannelFilter(msg.channel.id);

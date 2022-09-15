@@ -5,7 +5,7 @@ import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "ticket";
-  description = "show all available tickets you own";
+  description = "!ticket show all available tickets you own. EX)!ticket";
 
   async exec(msg: Message) {
     warChannelFilter(msg.channel.id);

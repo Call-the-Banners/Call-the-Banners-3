@@ -6,7 +6,7 @@ import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "rank";
-  description = "show your role";
+  description = "!rank show your role. EX)!rank";
 
   async exec(msg: Message) {
     warChannelFilter(msg.channel.id);

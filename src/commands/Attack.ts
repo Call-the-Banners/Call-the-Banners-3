@@ -9,7 +9,7 @@ import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "attack";
-  description = "attack castle";
+  description = "!attack attack castle. EX)!attack north";
 
   async exec(msg: Message, args: string[]) {
     warChannelFilter(msg.channel.id);
@@ -54,13 +54,20 @@ export default class extends Command {
 
     client.strikeHistory.save();
 
-    player.strikeCount++;
+    const battled = client.strikeHistory.current.filter(
+      (strike) => strike.playerID === player.id
+    );
+
+    if (battled.length === 1) {
+      player.battleCount++;
+    }
 
     const isStrongStrike = attack >= 95;
     const isWeakStrike = attack <= 55;
 
     player.lastAttack = new Date();
     player.save();
+    console.log(player);
 
     if (isStrongStrike || isWeakStrike) {
       const strikeImage = isWeakStrike

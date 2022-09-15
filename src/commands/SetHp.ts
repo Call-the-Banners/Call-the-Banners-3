@@ -6,7 +6,7 @@ import { client } from "..";
 
 export default class extends Command {
   name = "sethp";
-  description = "Set castle initial hp. !sethp <CastleName> <CastleHP>";
+  description = "!sethp Set castle initial hp. !sethp <CastleName> <CastleHP>";
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message, args: string[]) {

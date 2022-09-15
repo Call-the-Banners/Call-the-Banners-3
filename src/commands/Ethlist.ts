@@ -9,7 +9,7 @@ const getEmbedTemplate = () =>
 
 export default class extends Command {
   name = "ethlist";
-  description = "show eth address list";
+  description = "!ethlist show eth address list (admin only). EX)!ethlist";
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message) {

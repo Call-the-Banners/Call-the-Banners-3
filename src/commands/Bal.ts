@@ -6,7 +6,7 @@ import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "bal";
-  description = "show player's balance";
+  description = "!bal show player's balance. EX)!bal";
 
   async exec(msg: Message) {
     warChannelFilter(msg.channel.id);

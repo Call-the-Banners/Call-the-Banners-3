@@ -5,7 +5,8 @@ import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "fullleaderboard";
-  description = "display all players and their coins (admin only)";
+  description =
+    "!fullleaderboard display all players and their coins (admin only). EX)!fullleaderboard <page number>";
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   private chunk<T>(arr: T[], size: number) {

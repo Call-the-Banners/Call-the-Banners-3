@@ -5,7 +5,7 @@ import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "settime";
-  description = "sets cooldown period (in hours)";
+  description = "!settime sets cooldown period (in hours). EX)!settime 2";
 
   async exec(msg: Message, args: string[]) {
     warChannelFilter(msg.channel.id);

@@ -8,7 +8,7 @@ import { warChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "raffle";
-  description = "destroys all tickets and selects a winner";
+  description = "!raffle destroys all tickets and selects a winner. EX)!raffle";
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message) {
