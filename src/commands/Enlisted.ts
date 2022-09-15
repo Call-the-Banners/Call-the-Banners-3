@@ -3,7 +3,7 @@ import { Message, PermissionResolvable, MessageEmbed } from "discord.js";
 import paginationEmbed from "@psibean/discord.js-pagination";
 import { client } from "..";
 import { chunk } from "../utils";
-import { code } from "@jiman24/discordjs-utils";
+import { codeBlock } from "@discordjs/builders";
 
 const getEmbedTemplate = () =>
   new MessageEmbed().setColor("RANDOM").setTitle("Eth Address List");
@@ -20,7 +20,7 @@ export default class extends Command {
 
     const pagesData = chunkedAddress.map((chunk) =>
       getEmbedTemplate().setDescription(
-        code(
+        codeBlock(
           chunk.reduce(
             (acc, curr, currIndex) =>
               `${acc}${currIndex !== 0 ? "\n" : ""}${curr}`,

@@ -31,10 +31,10 @@ export class BattleStage {
     channel.send(`All castles cannot be attacked at this stage`);
 
     // reset castle hp
-    Castle.castleA.hp = Castle.INITIAL_HP;
+    Castle.castleA.hp = Castle.castleA.initialhp;
     Castle.castleA.save();
 
-    Castle.castleB.hp = Castle.INITIAL_HP;
+    Castle.castleB.hp = Castle.castleB.initialhp;
     Castle.castleB.save();
   }
 
@@ -119,7 +119,7 @@ export class BattleStage {
     channel.send(`${winGeneral.name} received ${Castle.GENERAL_REWARD} coins`);
 
     winnerCastle.removeGeneral();
-    winnerCastle.hp = Castle.INITIAL_HP;
+    winnerCastle.hp = winnerCastle.initialhp;
     winnerCastle.coinsSpent = 0;
     winnerCastle.save();
 
@@ -129,7 +129,7 @@ export class BattleStage {
     channel.send(`${coinsTaken} coins are taken away from ${loseGeneral.name}`);
 
     loserCastle.removeGeneral();
-    loserCastle.hp = Castle.INITIAL_HP;
+    loserCastle.hp = loserCastle.initialhp;
     loserCastle.coinsSpent = 0;
     loserCastle.save();
 

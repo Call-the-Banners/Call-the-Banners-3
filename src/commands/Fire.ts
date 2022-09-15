@@ -53,6 +53,18 @@ export default class extends Command {
           castleID: castle.id,
           date: new Date(),
         });
+        const user = Player.fromID(id);
+        if (user) {
+          user.strikeCount++;
+          user.save();
+        }
+        const battled = client.strikeHistory.current.filter(
+          (strike) => strike.playerID === id
+        );
+        if (battled.length === 1 && user) {
+          user.battleCount++;
+        }
+        user?.save();
       });
       msg.channel.send(
         `Ballista damaged ${bold(castle.name)} for ${bold(attack)} damage!`
