@@ -113,14 +113,14 @@ export function getMultiplier() {
   return randomize * 0.25;
 }
 
-export function warChannelFilter(channelId: string) {
-  if (channelId != "996302755792703522") {
-    throw new Error("This command only allow in war channel");
+export function botCommandChannelFilter(channelId: string) {
+  if (channelId != process.env.BOT_COMMAND_CHANNEL_ID) {
+    throw new Error("This command only allow in bot command channel");
   }
 }
 
 export function enlistChannelFilter(channelId: string) {
-  if (channelId != "1018755416609525823") {
+  if (channelId != process.env.ENLIST_COMMAND_CHANNEL_ID) {
     throw new Error("This command only allow in enlist channel");
   }
 }

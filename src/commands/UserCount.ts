@@ -7,14 +7,13 @@ export default class extends Command {
     "!usercount check how many user joined war (Admin only). EX)!usercoint";
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
-  async exec(msg: Message) {
-    const roleCollection = msg.member?.guild.roles.valueOf();
-    if (!roleCollection) {
-      return;
-    }
-    const role = roleCollection.find((role) => role.name === "Warrior");
+  async exec(message: Message) {
+    const role = await message.guild?.roles.fetch(
+      process.env.ENLISTED_ROLE_ID || ""
+    );
+
     if (role) {
-      msg.channel.send(`User that joined war: ${role.members.size}`);
+      message.channel.send(`User that joined war: ${role.members.size}`);
     }
   }
 }

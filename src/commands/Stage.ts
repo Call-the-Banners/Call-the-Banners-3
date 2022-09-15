@@ -1,7 +1,7 @@
 import { Command } from "@jiman24/commandment";
 import { Message, PermissionResolvable, TextBasedChannel } from "discord.js";
 import { client } from "..";
-import { warChannelFilter } from "../utils";
+import { botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "stage";
@@ -10,7 +10,7 @@ export default class extends Command {
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message, args: string[]) {
-    warChannelFilter(msg.channel.id);
+    botCommandChannelFilter(msg.channel.id);
     const state = args[0];
 
     if (!state) {

@@ -2,24 +2,18 @@ import { Command } from "@jiman24/commandment";
 import { Message, MessageEmbed } from "discord.js";
 import { Player } from "../structure/Player";
 import { client } from "..";
-import { decimalCheck, warChannelFilter } from "../utils";
+import { decimalCheck, botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "profile";
   description = "!profile show player's profile. EX)!profile or !profile @User";
 
-  async exec(msg: Message, args: string[]) {
-    warChannelFilter(msg.channel.id);
-    const mentionedMember = msg.mentions.members?.first();
-    let player: Player;
-    let thumbnail;
-    if (mentionedMember) {
-      player = Player.fromUser(mentionedMember.user);
-      thumbnail = mentionedMember.user.avatarURL();
-    } else {
-      player = Player.fromUser(msg.author);
-      thumbnail = msg.author.avatarURL();
-    }
+  async exec(msg: Message, _args: string[]) {
+    botCommandChannelFilter(msg.channel.id);
+
+    const user = msg.mentions.members?.first()?.user || msg.author;
+    const player = Player.fromUser(user);
+    const thumbnail = user.avatarURL();
 
     // User data
     const [role, coins, strikeHistory, strikes] = [
@@ -47,9 +41,8 @@ export default class extends Command {
       .setTitle(`Profile (${player.name})`)
       .setThumbnail(
         `${
-          thumbnail
-            ? thumbnail
-            : "https://w7.pngwing.com/pngs/304/275/png-transparent-user-profile-computer-icons-profile-miscellaneous-logo-monochrome-thumbnail.png"
+          thumbnail ||
+          "https://w7.pngwing.com/pngs/304/275/png-transparent-user-profile-computer-icons-profile-miscellaneous-logo-monochrome-thumbnail.png"
         }`
       )
       .setDescription(`Coins: ${coins}\nRank: ${role}`)

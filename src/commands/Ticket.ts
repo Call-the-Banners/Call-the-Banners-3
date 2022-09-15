@@ -1,14 +1,14 @@
 import { Command } from "@jiman24/commandment";
 import { Message, MessageEmbed } from "discord.js";
 import { Player } from "../structure/Player";
-import { warChannelFilter } from "../utils";
+import { botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "ticket";
   description = "!ticket show all available tickets you own. EX)!ticket";
 
   async exec(msg: Message) {
-    warChannelFilter(msg.channel.id);
+    botCommandChannelFilter(msg.channel.id);
     const player = Player.fromUser(msg.author);
     const tickets = player.tickets.map((x, i) => `${i + 1}. #${x.id}`);
 

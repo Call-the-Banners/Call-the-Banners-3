@@ -1,14 +1,14 @@
 import { Command } from "@jiman24/commandment";
 import { Message, MessageEmbed } from "discord.js";
 import { Castle } from "../structure/Castle";
-import { getCastleImage, warChannelFilter } from "../utils";
+import { getCastleImage, botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "hp";
   description = "!hp show castle's HP. EX)!hp south";
 
   async exec(msg: Message, args: string[]) {
-    warChannelFilter(msg.channel.id);
+    botCommandChannelFilter(msg.channel.id);
     const castleName = args[0];
 
     if (!castleName) {

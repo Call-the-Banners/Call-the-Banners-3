@@ -1,7 +1,7 @@
 import { Command } from "@jiman24/commandment";
 import { Message, MessageEmbed } from "discord.js";
 import { client } from "../index";
-import { warChannelFilter } from "../utils";
+import { botCommandChannelFilter } from "../utils";
 
 export default class Help extends Command {
   name = "help";
@@ -9,7 +9,7 @@ export default class Help extends Command {
   description = "show all commands and it's description";
 
   async exec(msg: Message) {
-    warChannelFilter(msg.channel.id);
+    botCommandChannelFilter(msg.channel.id);
     const commands = client.commandManager.commands.values();
 
     let helpText = "";

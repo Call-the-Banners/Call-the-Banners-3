@@ -1,6 +1,6 @@
 import { Command } from "@jiman24/commandment";
 import { Message, PermissionResolvable } from "discord.js";
-import { warChannelFilter } from "../utils";
+import { botCommandChannelFilter } from "../utils";
 import { Castle } from "../structure/Castle";
 import { client } from "..";
 
@@ -10,7 +10,7 @@ export default class extends Command {
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message, args: string[]) {
-    warChannelFilter(msg.channel.id);
+    botCommandChannelFilter(msg.channel.id);
     if (client.battleStage.stage !== "ready") {
       throw new Error(
         "you can only set castle hp when the stage is on ready stage"

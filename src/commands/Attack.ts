@@ -5,14 +5,14 @@ import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
 import { getCastleImage } from "../utils";
-import { warChannelFilter } from "../utils";
+import { botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "attack";
   description = "!attack attack castle. EX)!attack north";
 
   async exec(msg: Message, args: string[]) {
-    warChannelFilter(msg.channel.id);
+    botCommandChannelFilter(msg.channel.id);
     if (client.battleStage.stage !== "start") {
       throw new Error("you can only attack when battle starts");
     }
@@ -67,7 +67,6 @@ export default class extends Command {
 
     player.lastAttack = new Date();
     player.save();
-    console.log(player);
 
     if (isStrongStrike || isWeakStrike) {
       const strikeImage = isWeakStrike

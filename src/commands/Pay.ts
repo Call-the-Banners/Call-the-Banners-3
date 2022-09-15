@@ -2,14 +2,14 @@ import { Command } from "@jiman24/commandment";
 import { bold } from "@jiman24/discordjs-utils";
 import { Message } from "discord.js";
 import { Player } from "../structure/Player";
-import { warChannelFilter } from "../utils";
+import { botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "pay";
   description = "!pay give coins to other players. EX)!pay @User <coin amount>";
 
   async exec(msg: Message, args: string[]) {
-    warChannelFilter(msg.channel.id);
+    botCommandChannelFilter(msg.channel.id);
     const player = Player.fromUser(msg.author);
     const amountStr = args[1];
     const amount = parseInt(amountStr);

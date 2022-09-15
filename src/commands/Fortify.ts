@@ -3,14 +3,14 @@ import { Message } from "discord.js";
 import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
-import { getCastleImage, warChannelFilter } from "../utils";
+import { getCastleImage, botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "fortify";
   description = "!fortify fortify castle. EX)!fortify south 500";
 
   async exec(msg: Message, args: string[]) {
-    warChannelFilter(msg.channel.id);
+    botCommandChannelFilter(msg.channel.id);
     if (client.battleStage.stage !== "ready") {
       throw new Error("you can only fortify on ready stage");
     }

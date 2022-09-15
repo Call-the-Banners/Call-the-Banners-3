@@ -56,6 +56,11 @@ export class BattleStage {
   }
 
   setPauseStage(channel: TextBasedChannel) {
+    // Only started stage can pause
+    if (this.stage !== "start") {
+      throw new Error("The stage is not started yet, unable to pause.");
+    }
+
     this.stage = "pause";
     this.save();
 
@@ -65,6 +70,10 @@ export class BattleStage {
   }
 
   setUnpauseStage(channel: TextBasedChannel) {
+    if (this.stage !== "pause") {
+      throw new Error("The stage is not paused, unable to unpause.");
+    }
+
     this.stage = "start";
     this.save();
 

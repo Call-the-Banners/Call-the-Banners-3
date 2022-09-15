@@ -9,25 +9,29 @@ export default class extends Command {
   description =
     "!enlist add your eth address to join war. EX)!enlist <eth address>";
 
-  async exec(msg: Message, args: string[]) {
-    enlistChannelFilter(msg.channel.id);
-    if (!args[0]) {
+  async exec(message: Message, args: string[]) {
+    enlistChannelFilter(message.channel.id);
+
+    const userAddress = args[0];
+
+    if (!userAddress) {
       throw new Error("Please key in your eth address!");
     }
-    if (!Web3.utils.isAddress(args[0])) {
+    if (!Web3.utils.isAddress(userAddress)) {
       throw new Error("This is not an eth address!");
     }
 
-    client.ethAddress.addEth(args[0]);
+    client.ethAddress.addEth(userAddress);
 
-    const role = msg.member?.guild.roles.cache.find(
-      (role) => role.name === "Warrior"
+    const role = await message.guild?.roles.fetch(
+      process.env.ENLISTED_ROLE_ID || ""
     );
+
     if (role) {
-      msg.member?.roles.add(role);
+      message.member?.roles.add(role);
     }
 
-    msg.channel.send(
+    message.channel.send(
       "Successfully added your eth address, you can join war now!"
     );
   }

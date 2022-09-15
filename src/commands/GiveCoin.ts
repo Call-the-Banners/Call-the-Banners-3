@@ -1,6 +1,6 @@
 import { Command } from "@jiman24/commandment";
 import { Message, PermissionResolvable } from "discord.js";
-import { warChannelFilter } from "../utils";
+import { botCommandChannelFilter } from "../utils";
 import { Player } from "../structure/Player";
 
 export default class extends Command {
@@ -10,7 +10,7 @@ export default class extends Command {
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message, args: string[]) {
-    warChannelFilter(msg.channel.id);
+    botCommandChannelFilter(msg.channel.id);
     const mentionedMember = msg.mentions.members?.first();
 
     if (!mentionedMember) {

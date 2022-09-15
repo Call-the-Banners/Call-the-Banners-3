@@ -2,7 +2,7 @@ import { Message, MessageEmbed } from "discord.js";
 import { Command } from "@jiman24/commandment";
 import { client } from "..";
 import paginationEmbed from "@psibean/discord.js-pagination";
-import { chunk, getMedal, warChannelFilter } from "../utils";
+import { chunk, getMedal, botCommandChannelFilter } from "../utils";
 
 const getHonorMessageEmbedTemplate = () =>
   new MessageEmbed()
@@ -18,7 +18,7 @@ export default class extends Command {
     "!honor full list of players ranked based on the total strikes dealt. EX)!honor";
 
   async exec(msg: Message, _args: string[]) {
-    warChannelFilter(msg.channel.id);
+    botCommandChannelFilter(msg.channel.id);
     // Consolidate player attribute and sort player by damage
     const players = [...client.players.values()]
       .map((player) => {

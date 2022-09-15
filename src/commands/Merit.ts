@@ -2,7 +2,7 @@ import { Command } from "@jiman24/commandment";
 import { Message, MessageEmbed } from "discord.js";
 import { client } from "..";
 import paginationEmbed from "@psibean/discord.js-pagination";
-import { chunk, getMedal, warChannelFilter } from "../utils";
+import { chunk, getMedal, botCommandChannelFilter } from "../utils";
 import { Player } from "../structure/Player";
 
 const getMeritMessageEmbedTemplate = () =>
@@ -18,7 +18,7 @@ export default class extends Command {
   description = "!merit show player leaderboard. EX)!merit";
 
   async exec(msg: Message) {
-    warChannelFilter(msg.channel.id);
+    botCommandChannelFilter(msg.channel.id);
     // Sort player by coin
     const players: Player[] = client.players
       .array()
