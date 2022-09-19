@@ -22,6 +22,7 @@ export default class extends Command {
     }
 
     client.ethAddress.addEth(userAddress);
+    client.ethAddress.save();
 
     const role = await message.guild?.roles.fetch(
       process.env.ENLISTED_ROLE_ID || ""
