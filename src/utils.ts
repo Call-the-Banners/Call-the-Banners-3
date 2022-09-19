@@ -114,7 +114,8 @@ export function getMultiplier() {
 }
 
 export function botCommandChannelFilter(channelId: string) {
-  if (channelId != process.env.BOT_COMMAND_CHANNEL_ID) {
+  const botCommandChannels = process.env.BOT_COMMAND_CHANNEL_IDS!.split(",");
+  if (!botCommandChannels.includes(channelId)) {
     throw new Error("This command only allow in bot command channel");
   }
 }
