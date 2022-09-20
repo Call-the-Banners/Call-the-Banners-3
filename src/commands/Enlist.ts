@@ -3,6 +3,7 @@ import { Message } from "discord.js";
 import { enlistChannelFilter } from "../utils";
 import Web3 from "web3";
 import { client } from "..";
+import { userMention } from "@discordjs/builders";
 
 export default class extends Command {
   name = "enlist";
@@ -32,8 +33,10 @@ export default class extends Command {
       message.member?.roles.add(role);
     }
 
-    message.channel.send(
-      "Successfully added your eth address, you can join war now!"
+    message.reply(
+      `${userMention(
+        message.author.id
+      )} Successfully added your eth address, you can join war now!`
     );
   }
 }
