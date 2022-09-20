@@ -10,6 +10,7 @@ const getEmbedTemplate = () =>
 
 export default class extends Command {
   name = "enlisted";
+  disabled = true;
   description = "!enlisted show eth address list (admin only). EX)!enlisted";
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
