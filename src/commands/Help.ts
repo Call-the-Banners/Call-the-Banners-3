@@ -9,7 +9,6 @@ export default class Help extends Command {
   description = "show all commands and it's description";
 
   async exec(msg: Message) {
-    botCommandChannelFilter(msg.channel.id);
     const commands = client.commandManager.commands.values();
 
     let helpText = "";
