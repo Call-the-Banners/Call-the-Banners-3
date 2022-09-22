@@ -18,16 +18,14 @@ export default class extends Command {
     const addressPerPage = 10;
     const ethList = client.ethAddress.allTime;
     const chunkedAddress = chunk(ethList, addressPerPage);
-
+    console.log(chunkedAddress);
     const pagesData = chunkedAddress.map((chunk) =>
-      getEmbedTemplate().setDescription(
-        codeBlock(
-          chunk.reduce(
-            (acc, curr, currIndex) =>
-              `${acc}${currIndex !== 0 ? "\n" : ""}${curr}`,
-            ""
-          )
-        )
+      getEmbedTemplate().setFields(
+        chunk.map((chunkData) => ({
+          name: `${chunkData.name}`,
+          value: `${chunkData.address}`,
+          inline: false,
+        }))
       )
     );
 

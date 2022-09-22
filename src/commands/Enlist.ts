@@ -12,7 +12,6 @@ export default class extends Command {
 
   async exec(message: Message, args: string[]) {
     enlistChannelFilter(message.channel.id);
-
     const userAddress = args[0];
 
     if (!userAddress) {
@@ -22,7 +21,11 @@ export default class extends Command {
       throw new Error("This is not an eth address!");
     }
 
-    client.ethAddress.addEth(userAddress);
+    client.ethAddress.addEth({
+      name: message.author.username + "#" + message.author.discriminator,
+      id: message.author.id,
+      address: userAddress,
+    });
     client.ethAddress.save();
 
     const role = await message.guild?.roles.fetch(
