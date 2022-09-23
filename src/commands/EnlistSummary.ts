@@ -20,8 +20,12 @@ export default class extends Command {
       );
     });
 
+    if (!fs.existsSync(dirname)) {
+      fs.mkdirSync(dirname);
+    }
+
     fs.writeFileSync(
-      "enlistsummary/" + filename + ".txt",
+      dirname + "/" + filename + ".txt",
       data.reduce((prev, curr) => prev + "\n" + curr)
     );
 
