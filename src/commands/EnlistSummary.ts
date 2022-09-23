@@ -13,11 +13,10 @@ export default class extends Command {
     const ethList = client.ethAddress.allTime;
     const dirname = "enlistsummary";
     const filename = "summary";
+    const title = "name,id,address\n";
 
     const data = ethList.map((data) => {
-      return (
-        "name:" + data.name + " id:" + data.id + " address:" + data.address
-      );
+      return data.name + "," + data.id + "," + data.address;
     });
 
     if (!fs.existsSync(dirname)) {
@@ -26,7 +25,7 @@ export default class extends Command {
 
     fs.writeFileSync(
       dirname + "/" + filename + ".txt",
-      data.reduce((prev, curr) => prev + "\n" + curr)
+      title + data.reduce((prev, curr) => prev + "\n" + curr)
     );
 
     msg.channel.send("Successfully update summary file!");
