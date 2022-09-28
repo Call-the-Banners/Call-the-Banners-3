@@ -12,6 +12,7 @@
     "command": "commandment -d src/commands",
     "test": "echo \"Error: no test specified\" && exit 1",
     "castle-reset": "node dist/migration.js",
+    "enlist-summary": "node dist/summary.js",
     "prettier": "prettier --write .",
     "prepare": "husky install"
   },
