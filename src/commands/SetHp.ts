@@ -11,8 +11,6 @@ export default class extends Command {
 
   async exec(msg: Message, args: string[]) {
     botCommandChannelFilter(msg.channel.id);
-    console.log(client.battleStage.stage !== "ready");
-    console.log(client.battleStage.stage !== "start");
     if (
       client.battleStage.stage !== "ready" &&
       client.battleStage.stage !== "start"
