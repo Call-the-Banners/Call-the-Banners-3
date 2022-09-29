@@ -11,9 +11,14 @@ export default class extends Command {
 
   async exec(msg: Message, args: string[]) {
     botCommandChannelFilter(msg.channel.id);
-    if (client.battleStage.stage !== "ready") {
+    console.log(client.battleStage.stage !== "ready");
+    console.log(client.battleStage.stage !== "start");
+    if (
+      client.battleStage.stage !== "ready" &&
+      client.battleStage.stage !== "start"
+    ) {
       throw new Error(
-        "you can only set castle hp when the stage is on ready stage"
+        "you can only set castle hp when the stage is on ready or start stage"
       );
     }
     const castleName = args[0];
@@ -27,7 +32,8 @@ export default class extends Command {
 
     const castle = Castle.fromName(castleName);
 
-    castle.hp = castleInitialHp;
+    castle.hp =
+      (castleInitialHp / 100) * ((castle.hp / castle.initialhp) * 100);
     castle.initialhp = castleInitialHp;
     castle.maxhp = castleInitialHp * 1.5;
     castle.save();

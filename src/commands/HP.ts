@@ -23,8 +23,10 @@ export default class extends Command {
       castle.id
     );
 
+    const percentage = (castle.hp / castle.initialhp) * 100;
+
     const embed = new MessageEmbed()
-      .setDescription(`${castle.name}'s HP: ${castle.hp}`)
+      .setDescription(`${castle.name}'s HP: ${percentage}%`)
       .setImage("attachment://castle.png");
 
     msg.reply({ embeds: [embed], files: [attachment] });
