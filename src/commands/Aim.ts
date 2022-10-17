@@ -4,12 +4,14 @@ import { Message } from "discord.js";
 import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
+import { botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "aim";
-  description = "load ballista";
+  description = "!aim load ballista. EX)!aim south";
 
   async exec(msg: Message, args: string[]) {
+    botCommandChannelFilter(msg.channel.id);
     if (client.battleStage.stage !== "start") {
       throw new Error("you can only load when battle starts");
     }

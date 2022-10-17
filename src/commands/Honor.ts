@@ -2,21 +2,23 @@ import { Message, MessageEmbed } from "discord.js";
 import { Command } from "@jiman24/commandment";
 import { client } from "..";
 import paginationEmbed from "@psibean/discord.js-pagination";
-import { chunk, getMedal } from "../utils";
+import { chunk, getMedal, botCommandChannelFilter } from "../utils";
 
 const getHonorMessageEmbedTemplate = () =>
   new MessageEmbed()
     .setColor("RANDOM")
     .setTitle("Honor")
     .setThumbnail(
-      "https://media.istockphoto.com/vectors/pixel-art-seamless-background-vector-id910096016?k=20&m=910096016&s=612x612&w=0&h=uBDKuOLlgBItrIBWMZcHYPwWA5RZp610sMe6g0hxays="
+      "https://media.discordapp.net/attachments/982462379449282613/1019598443825606656/Honor-Header.jpg"
     );
 
 export default class extends Command {
   name = "honor";
-  description = "full list of players ranked based on the total strikes dealt";
+  description =
+    "!honor full list of players ranked based on the total strikes dealt. EX)!honor";
 
   async exec(msg: Message, _args: string[]) {
+    botCommandChannelFilter(msg.channel.id);
     // Consolidate player attribute and sort player by damage
     const players = [...client.players.values()]
       .map((player) => {

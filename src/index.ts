@@ -12,6 +12,7 @@ export const client = new Client({
     "DIRECT_MESSAGES",
     "GUILD_MESSAGE_REACTIONS",
     "GUILD_MEMBERS",
+    "GUILD_PRESENCES",
   ],
   partials: ["CHANNEL", "GUILD_MEMBER", "REACTION"],
 });

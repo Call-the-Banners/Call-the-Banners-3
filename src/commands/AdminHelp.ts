@@ -1,12 +1,12 @@
 import { Command } from "@jiman24/commandment";
-import { Message, MessageEmbed } from "discord.js";
+import { Message, MessageEmbed, PermissionResolvable } from "discord.js";
 import { client } from "../index";
 import { botCommandChannelFilter } from "../utils";
 
 export default class Help extends Command {
-  name = "help";
-  aliases = ["h"];
-  description = "show all commands and it's description";
+  name = "adminhelp";
+  description = "show all admin commands and it's description";
+  permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message) {
     const commands = client.commandManager.commands.values();
@@ -15,7 +15,7 @@ export default class Help extends Command {
     const done = new Set<string>();
 
     for (const command of commands) {
-      if (command.disable || command.permissions.includes("ADMINISTRATOR"))
+      if (command.disable || !command.permissions.includes("ADMINISTRATOR"))
         continue;
 
       if (done.has(command.name)) {
@@ -27,7 +27,9 @@ export default class Help extends Command {
       helpText += `\n**${command.name}**: \`${command.description || "none"}\``;
     }
 
-    const embed = new MessageEmbed().setTitle("Help").setDescription(helpText);
+    const embed = new MessageEmbed()
+      .setTitle("Administrator Help")
+      .setDescription(helpText);
 
     msg.channel.send({ embeds: [embed] });
   }

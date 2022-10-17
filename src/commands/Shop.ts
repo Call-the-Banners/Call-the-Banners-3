@@ -2,12 +2,14 @@ import { Command } from "@jiman24/commandment";
 import { Message, MessageEmbed } from "discord.js";
 import { Player } from "../structure/Player";
 import { Ticket } from "../structure/Ticket";
+import { botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "shop";
-  description = "buy items with your coins";
+  description = "!shop buy items with your coins. EX)!shop buy 1";
 
   async exec(msg: Message, args: string[]) {
+    botCommandChannelFilter(msg.channel.id);
     const arg1 = args[0];
     const arg2 = args[1];
     const arg3 = args[2];

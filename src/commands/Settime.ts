@@ -1,12 +1,14 @@
 import { Command } from "@jiman24/commandment";
 import { Message } from "discord.js";
 import { client } from "..";
+import { botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "settime";
-  description = "sets cooldown period (in hours)";
+  description = "!settime sets cooldown period (in hours). EX)!settime 2";
 
   async exec(msg: Message, args: string[]) {
+    botCommandChannelFilter(msg.channel.id);
     const role = args[0];
     const amountStr = args[1];
     const amount = parseInt(amountStr);

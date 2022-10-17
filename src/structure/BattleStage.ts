@@ -11,7 +11,7 @@ import { Sword } from "./Sword";
  * start - generals cannot fortify and players can attack
  * end - general cannot fortify and players cannot attack
  * */
-export type Stage = "ready" | "start" | "end";
+export type Stage = "ready" | "start" | "end" | "pause";
 
 export class BattleStage {
   id = "main";
@@ -31,10 +31,10 @@ export class BattleStage {
     channel.send(`All castles cannot be attacked at this stage`);
 
     // reset castle hp
-    Castle.castleA.hp = Castle.INITIAL_HP;
+    Castle.castleA.hp = Castle.castleA.initialhp;
     Castle.castleA.save();
 
-    Castle.castleB.hp = Castle.INITIAL_HP;
+    Castle.castleB.hp = Castle.castleB.initialhp;
     Castle.castleB.save();
   }
 
@@ -53,6 +53,33 @@ export class BattleStage {
 
     channel.send(`Generals can no longer fortify castle`);
     channel.send(`Swords and Generals now may attack castle`);
+  }
+
+  setPauseStage(channel: TextBasedChannel) {
+    // Only started stage can pause
+    if (this.stage !== "start") {
+      throw new Error("The stage is not started yet, unable to pause.");
+    }
+
+    this.stage = "pause";
+    this.save();
+
+    channel.send(
+      `The stage has been paused! Player will not be allow to attack, aim, or fire!`
+    );
+  }
+
+  setUnpauseStage(channel: TextBasedChannel) {
+    if (this.stage !== "pause") {
+      throw new Error("The stage is not paused, unable to unpause.");
+    }
+
+    this.stage = "start";
+    this.save();
+
+    channel.send(
+      `The stage has been unpaused! Player can continue the battle!`
+    );
   }
 
   setEndStage(channel: TextBasedChannel) {
@@ -92,7 +119,7 @@ export class BattleStage {
     channel.send(`${winGeneral.name} received ${Castle.GENERAL_REWARD} coins`);
 
     winnerCastle.removeGeneral();
-    winnerCastle.hp = Castle.INITIAL_HP;
+    winnerCastle.hp = winnerCastle.initialhp;
     winnerCastle.coinsSpent = 0;
     winnerCastle.save();
 
@@ -102,7 +129,7 @@ export class BattleStage {
     channel.send(`${coinsTaken} coins are taken away from ${loseGeneral.name}`);
 
     loserCastle.removeGeneral();
-    loserCastle.hp = Castle.INITIAL_HP;
+    loserCastle.hp = loserCastle.initialhp;
     loserCastle.coinsSpent = 0;
     loserCastle.save();
 
@@ -123,7 +150,6 @@ export class BattleStage {
 
     client.strikeHistory.clear();
     client.strikeHistory.save();
-    console.log("Battle end test");
     client.loadHistory.clear();
     client.loadHistory.save();
   }
@@ -142,6 +168,12 @@ export class BattleStage {
         break;
       case "end":
         this.setEndStage(channel);
+        break;
+      case "pause":
+        this.setPauseStage(channel);
+        break;
+      case "unpause":
+        this.setUnpauseStage(channel);
         break;
       default:
         throw new Error(`invalid stage "${stage}"`);

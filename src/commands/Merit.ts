@@ -2,7 +2,7 @@ import { Command } from "@jiman24/commandment";
 import { Message, MessageEmbed } from "discord.js";
 import { client } from "..";
 import paginationEmbed from "@psibean/discord.js-pagination";
-import { chunk, getMedal } from "../utils";
+import { chunk, getMedal, botCommandChannelFilter } from "../utils";
 import { Player } from "../structure/Player";
 
 const getMeritMessageEmbedTemplate = () =>
@@ -10,14 +10,15 @@ const getMeritMessageEmbedTemplate = () =>
     .setColor("RANDOM")
     .setTitle("Merit")
     .setThumbnail(
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVM3S21YjZuISQInR4jDkyVDRAUOG_YkL-jj6N7CPYNj1-7-sXplmM-G-OuN2EWITs-Bk&usqp=CAU"
+      "https://media.discordapp.net/attachments/982462379449282613/1019598444052095016/Merit-Header.jpg"
     );
 
 export default class extends Command {
   name = "merit";
-  description = "show player leaderboard";
+  description = "!merit show player leaderboard. EX)!merit";
 
   async exec(msg: Message) {
+    botCommandChannelFilter(msg.channel.id);
     // Sort player by coin
     const players: Player[] = client.players
       .array()

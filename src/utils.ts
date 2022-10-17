@@ -49,21 +49,21 @@ export async function getCastleImage(
   context.stroke();
   context.fill();
 
+  let setHpBarWidth = (hpPercentage % 1) * hpBarWidth;
+  if (hpPercentage >= 1) {
+    setHpBarWidth = hpBarWidth;
+  }
+
   context.beginPath();
   context.fillStyle = "#FF0000";
-  context.rect(
-    25,
-    25,
-    hpPercentage > 0 ? (hpPercentage % 1) * hpBarWidth : 0,
-    5
-  );
+  context.rect(25, 25, setHpBarWidth, 5);
   context.stroke();
   context.fill();
 
   if (hpPercentage > 1) {
     context.beginPath();
     context.fillStyle = "#B800B2";
-    context.rect(25, 25, (1 - hpPercentage) * hpBarWidth, 5);
+    context.rect(25, 25, (hpPercentage - 1) * hpBarWidth, 5);
     context.stroke();
     context.fill();
   }
@@ -78,7 +78,7 @@ export async function getCastleImage(
 
 export function getBaseCastleImage(percentage: number, castleName: string) {
   switch (castleName) {
-    case "south":
+    case "north":
       if (percentage > 0.65) {
         return "https://cdn.discordapp.com/attachments/1008996898155286590/1008997364968722463/CastleState1Blue.png";
       }
@@ -91,7 +91,7 @@ export function getBaseCastleImage(percentage: number, castleName: string) {
 
       return "https://cdn.discordapp.com/attachments/1008996898155286590/1008997370832375808/CastleState4Blue.png";
 
-    case "north":
+    case "south":
       if (percentage > 0.65) {
         return "https://cdn.discordapp.com/attachments/1008996898155286590/1008997365295894598/CastleState1Red.png";
       }
@@ -111,4 +111,17 @@ export function getBaseCastleImage(percentage: number, castleName: string) {
 export function getMultiplier() {
   const randomize = random.integer(1, 10);
   return randomize * 0.25;
+}
+
+export function botCommandChannelFilter(channelId: string) {
+  const botCommandChannels = process.env.BOT_COMMAND_CHANNEL_IDS!.split(",");
+  if (!botCommandChannels.includes(channelId)) {
+    throw new Error("This command only allow in bot command channel");
+  }
+}
+
+export function enlistChannelFilter(channelId: string) {
+  if (channelId != process.env.ENLIST_COMMAND_CHANNEL_ID) {
+    throw new Error("This command only allow in enlist channel");
+  }
 }

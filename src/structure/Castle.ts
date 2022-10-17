@@ -35,6 +35,8 @@ export class Castle {
 
   general?: General;
   hp = Castle.INITIAL_HP;
+  initialhp = Castle.INITIAL_HP;
+  maxhp = Castle.MAX_HP;
 
   coinsSpent = 0;
   generalID?: string;

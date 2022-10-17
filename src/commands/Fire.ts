@@ -4,13 +4,14 @@ import { Message } from "discord.js";
 import { client } from "..";
 import { Castle } from "../structure/Castle";
 import { Player } from "../structure/Player";
-import { getMultiplier } from "../utils";
+import { botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "fire";
-  description = "fire ballista";
+  description = "!fire fire ballista. EX)!fire south";
 
   async exec(msg: Message, args: string[]) {
+    botCommandChannelFilter(msg.channel.id);
     if (client.battleStage.stage !== "start") {
       throw new Error("you can only fire when battle starts");
     }
@@ -38,7 +39,6 @@ export default class extends Command {
     }
 
     const loadData = client.loadHistory.fireLoad(ownCastle.name);
-    console.log(loadData);
 
     const attack = loadData.final;
     if (attack && loadData.playerID) {
@@ -53,6 +53,18 @@ export default class extends Command {
           castleID: castle.id,
           date: new Date(),
         });
+        const user = Player.fromID(id);
+        if (user) {
+          user.strikeCount++;
+          user.save();
+        }
+        const battled = client.strikeHistory.current.filter(
+          (strike) => strike.playerID === id
+        );
+        if (battled.length === 1 && user) {
+          user.battleCount++;
+        }
+        user?.save();
       });
       msg.channel.send(
         `Ballista damaged ${bold(castle.name)} for ${bold(attack)} damage!`

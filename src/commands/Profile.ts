@@ -2,14 +2,18 @@ import { Command } from "@jiman24/commandment";
 import { Message, MessageEmbed } from "discord.js";
 import { Player } from "../structure/Player";
 import { client } from "..";
-import { decimalCheck } from "../utils";
+import { decimalCheck, botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "profile";
-  description = "show player's profile";
+  description = "!profile show player's profile. EX)!profile or !profile @User";
 
-  async exec(msg: Message) {
-    const player = Player.fromUser(msg.author);
+  async exec(msg: Message, _args: string[]) {
+    botCommandChannelFilter(msg.channel.id);
+
+    const user = msg.mentions.members?.first()?.user || msg.author;
+    const player = Player.fromUser(user);
+    const thumbnail = user.avatarURL();
 
     // User data
     const [role, coins, strikeHistory, strikes] = [
@@ -37,9 +41,8 @@ export default class extends Command {
       .setTitle(`Profile (${player.name})`)
       .setThumbnail(
         `${
-          msg.author.avatarURL()
-            ? msg.author.avatarURL()
-            : "https://w7.pngwing.com/pngs/304/275/png-transparent-user-profile-computer-icons-profile-miscellaneous-logo-monochrome-thumbnail.png"
+          thumbnail ||
+          "https://w7.pngwing.com/pngs/304/275/png-transparent-user-profile-computer-icons-profile-miscellaneous-logo-monochrome-thumbnail.png"
         }`
       )
       .setDescription(`Coins: ${coins}\nRank: ${role}`)
@@ -48,12 +51,9 @@ export default class extends Command {
           ? [
               {
                 name: "Battle Stats",
-                value: `# of Strikes: ${
-                  strikes.length
-                }\n Total HP Dealt: ${totalDamageDealtInStage}\n Average HP Dealt: ${decimalCheck(
-                  avgDamageDealtInStage,
-                  2
-                )}`,
+                value: `# of Strikes: ${strikes.length}
+                Total HP Dealt: ${totalDamageDealtInStage}
+                Average HP Dealt: ${decimalCheck(avgDamageDealtInStage, 2)}`,
               },
             ]
           : []),
@@ -61,9 +61,11 @@ export default class extends Command {
           ? [
               {
                 name: "Lifetime Stats",
-                value: `Biggest Strike: ${player.maxAttack}\n Lowest Strike: ${
-                  player.minAttack
-                }\n Lifetime Average: ${decimalCheck(averageDamage, 2)}`,
+                value: `Lifetime Average: ${decimalCheck(averageDamage, 2)}
+              # of Strikes Lifetime: ${numberOfStrikesAllTime}
+              ${
+                player.battleCount ? "# of battles: " + player.battleCount : ""
+              }`,
               },
             ]
           : []),

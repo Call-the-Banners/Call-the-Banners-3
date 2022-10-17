@@ -4,13 +4,15 @@ import { Message, PermissionResolvable } from "discord.js";
 import { client } from "..";
 import { Player } from "../structure/Player";
 import { Ticket } from "../structure/Ticket";
+import { botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "raffle";
-  description = "destroys all tickets and selects a winner";
+  description = "!raffle destroys all tickets and selects a winner. EX)!raffle";
   permissions: PermissionResolvable[] = ["ADMINISTRATOR"];
 
   async exec(msg: Message) {
+    botCommandChannelFilter(msg.channel.id);
     if (Ticket.all.length === 0) {
       throw new Error("no one owns a raffle ticket");
     }

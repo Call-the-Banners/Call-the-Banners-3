@@ -2,12 +2,14 @@ import { Command } from "@jiman24/commandment";
 import { Message } from "discord.js";
 import { client } from "..";
 import { Player } from "../structure/Player";
+import { botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "sharpen";
-  description = "sharpen your attack";
+  description = "!sharpen sharpen your attack. EX)!sharpen";
 
   async exec(msg: Message) {
+    botCommandChannelFilter(msg.channel.id);
     const player = Player.fromUser(msg.author);
     const amount = 50;
 

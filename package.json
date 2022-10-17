@@ -12,12 +12,14 @@
     "command": "commandment -d src/commands",
     "test": "echo \"Error: no test specified\" && exit 1",
     "castle-reset": "node dist/migration.js",
+    "enlist-summary": "node dist/summary.js",
     "prettier": "prettier --write .",
     "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/builders": "^1.2.0",
     "@jiman24/commandment": "^0.7.0",
     "@jiman24/discordjs-utils": "^0.1.2",
     "@napi-rs/canvas": "^0.1.29",
@@ -30,7 +32,8 @@
     "nodemon": "^2.0.19",
     "typescript": "^4.6.2",
     "uuid": "^8.3.2",
-    "uuidv4": "^6.2.12"
+    "uuidv4": "^6.2.12",
+    "web3": "^1.7.5"
   },
   "devDependencies": {
     "@types/common-tags": "^1.8.1",

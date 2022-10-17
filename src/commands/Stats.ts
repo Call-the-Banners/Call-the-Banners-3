@@ -1,10 +1,12 @@
 import { Message, MessageEmbed } from "discord.js";
 import { Command } from "@jiman24/commandment";
 import { client } from "..";
+import { botCommandChannelFilter } from "../utils";
 
 export default class extends Command {
   name = "stats";
-  description = "full list of players ranked based on the total strikes dealt";
+  description =
+    "!stats full list of players ranked based on the total strikes dealt. EX)!stats";
 
   private chunk<T>(arr: T[], size: number) {
     return Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
@@ -13,6 +15,7 @@ export default class extends Command {
   }
 
   async exec(msg: Message, args: string[]) {
+    botCommandChannelFilter(msg.channel.id);
     const index = parseInt(args[0]) - 1 || 0;
 
     const players = [...client.players.values()]

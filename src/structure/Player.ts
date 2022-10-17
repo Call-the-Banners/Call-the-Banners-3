@@ -12,6 +12,7 @@ export abstract class Player {
   sharpenMaxAttack = 200;
   lastAttack = new Date(2000);
   strikeCount = 0;
+  battleCount = 0;
   tickets: Ticket[] = [];
   abstract COOLDOWN: number;
 
