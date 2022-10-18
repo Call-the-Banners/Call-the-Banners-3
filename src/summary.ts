@@ -8,12 +8,12 @@ const filename = "summary";
 const title = "name,id,address,strikes,totalDmg,avgDmg,coins\n";
 
 const data = ethList.map((ethEntry) => {
-  const player = Player.fromID(ethEntry.id)!;
+  const player = Player.fromID(ethEntry.id)
 
   const strikeHistory = client.strikeHistory.allTime.filter(
-    (x) => x.playerID === player.id
+    (x) => x.playerID === ethEntry.id
   );
-  const strikes = client.strikeHistory.current.filter((x) => x.playerID === player.id)
+  const strikes = client.strikeHistory.current.filter((x) => x.playerID === ethEntry.id)
 
   const numberOfStrikesAllTime = strikeHistory.length;
   const lifeTimeGrossAttack = strikeHistory.reduce(
@@ -26,7 +26,7 @@ const data = ethList.map((ethEntry) => {
     0
   );
 
-  return `${ethEntry.name},${ethEntry.id},${ethEntry.address},${strikeHistory.length},${totalDamage},${averageDamage},${player.coins}`;
+  return `${ethEntry.name},${ethEntry.id},${ethEntry.address},${strikeHistory.length},${totalDamage},${averageDamage},${player?.coins || 0}`;
 });
 
 if (!fs.existsSync(dirname)) {
