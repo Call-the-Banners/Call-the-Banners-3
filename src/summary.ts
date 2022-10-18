@@ -13,7 +13,6 @@ const data = ethList.map((ethEntry) => {
   const strikeHistory = client.strikeHistory.allTime.filter(
     (x) => x.playerID === ethEntry.id
   );
-  const strikes = client.strikeHistory.current.filter((x) => x.playerID === ethEntry.id)
 
   const numberOfStrikesAllTime = strikeHistory.length;
   const lifeTimeGrossAttack = strikeHistory.reduce(
@@ -21,7 +20,7 @@ const data = ethList.map((ethEntry) => {
     0
   );
   const averageDamage = lifeTimeGrossAttack / numberOfStrikesAllTime || 0;
-  const totalDamage = strikes.reduce(
+  const totalDamage = strikeHistory.reduce(
     (acc, x) => acc + x.damage,
     0
   );
