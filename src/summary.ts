@@ -1,17 +1,32 @@
 import { client } from ".";
+import { Player } from "./structure/Player";
 
 const fs = require("fs");
 const ethList = client.ethAddress.allTime;
 const dirname = "enlistsummary";
 const filename = "summary";
-const title = "name,id,address,strikes\n";
+const title = "name,id,address,strikes,totalDmg,avgDmg,coins\n";
 
 const data = ethList.map((ethEntry) => {
+  const player = Player.fromID(ethEntry.id)!;
+
   const strikeHistory = client.strikeHistory.allTime.filter(
-    (x) => x.playerID === ethEntry.id
+    (x) => x.playerID === player.id
+  );
+  const strikes = client.strikeHistory.current.filter((x) => x.playerID === player.id)
+
+  const numberOfStrikesAllTime = strikeHistory.length;
+  const lifeTimeGrossAttack = strikeHistory.reduce(
+    (acc, x) => acc + x.damage,
+    0
+  );
+  const averageDamage = lifeTimeGrossAttack / numberOfStrikesAllTime || 0;
+  const totalDamage = strikes.reduce(
+    (acc, x) => acc + x.damage,
+    0
   );
 
-  return `${ethEntry.name},${ethEntry.id},${ethEntry.address},${strikeHistory.length}`;
+  return `${ethEntry.name},${ethEntry.id},${ethEntry.address},${strikeHistory.length},${totalDamage},${averageDamage},${player.coins}`;
 });
 
 if (!fs.existsSync(dirname)) {
